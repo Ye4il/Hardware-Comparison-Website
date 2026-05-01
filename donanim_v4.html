@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"/>
+<title>Donanımları Karşılaştır</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<style>
+/* ── RESET ── */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);color:#e0e0e0;min-height:100vh;}
+
+/* ── NAV ── */
+nav{
+  background:rgba(15,12,41,0.55);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  padding:0 2rem;
+  height:58px;
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  position:sticky;top:0;z-index:1000;
+  border-bottom:1px solid rgba(0,255,255,0.15);
+  box-shadow:0 4px 20px rgba(0,0,0,0.3);
+}
+.nav-logo{
+  font-size:1.1rem;font-weight:800;
+  background:linear-gradient(90deg,#00ffff,#ff00ff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  white-space:nowrap;flex-shrink:0;
+}
+
+/* NAV SEARCH */
+.nav-search{flex:1;max-width:380px;position:relative;}
+.nav-search input{
+  width:100%;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(0,255,255,0.2);
+  border-radius:8px;color:#e0e0e0;font-size:13px;
+  padding:7px 12px 7px 34px;outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+.nav-search input:focus{border-color:#00ffff;box-shadow:0 0 10px rgba(0,255,255,0.15);}
+.nav-search input::placeholder{color:#555;}
+.nav-search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#555;pointer-events:none;}
+
+/* ── NAV LİNKLER ── */
+.nav-links{display:flex;gap:4px;margin-left:auto;flex-shrink:0;}
+.nav-link{
+  padding:6px 14px;border-radius:8px;font-size:13px;font-weight:600;
+  color:#666;background:transparent;border:none;cursor:pointer;
+  transition:all .2s;white-space:nowrap;font-family:inherit;
+}
+.nav-link:hover{background:rgba(255,255,255,0.07);color:#ccc;}
+.nav-link.active{background:rgba(0,255,255,0.1);color:#00ffff;}
+
+/* ── LAYOUT ── */
+.app-body{display:flex;height:calc(100vh - 58px - 52px - 38px);}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:185px;min-width:185px;
+  background:rgba(15,12,41,0.5);
+  backdrop-filter:blur(12px);
+  border-right:1px solid rgba(255,255,255,0.06);
+  padding:18px 0;
+  display:flex;flex-direction:column;gap:3px;
+}
+.sidebar-label{
+  font-size:10px;text-transform:uppercase;letter-spacing:1px;
+  color:#444;padding:0 14px 10px;
+}
+.cat-btn{
+  display:flex;align-items:center;gap:9px;
+  padding:9px 14px;cursor:pointer;font-size:13px;
+  color:#777;background:transparent;border:none;
+  border-radius:0;font-weight:500;text-align:left;width:100%;
+  transition:background .15s,color .15s;
+  border-left:3px solid transparent;
+}
+.cat-btn:hover{background:rgba(0,255,255,0.05);color:#ccc;}
+.cat-btn.active{background:rgba(0,255,255,0.08);color:#00ffff;border-left-color:#00ffff;}
+.cat-count{
+  margin-left:auto;font-size:10px;color:#444;
+  background:rgba(255,255,255,0.05);border-radius:10px;padding:1px 7px;
+}
+.cat-btn.active .cat-count{color:#00ffff;background:rgba(0,255,255,0.12);}
+
+/* ── MAIN ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+
+/* ── GRID ── */
+.grid{
+  flex:1;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+  gap:1.2rem;padding:1.5rem;
+  overflow-y:auto;align-content:start;
+}
+.grid::-webkit-scrollbar{width:5px;}
+.grid::-webkit-scrollbar-track{background:transparent;}
+.grid::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px;}
+
+/* ── EMPTY STATE ── */
+.empty-state{
+  grid-column:1/-1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:12px;padding:80px 0;color:#444;font-size:14px;
+}
+
+/* ── PRODUCT CARD ── */
+.card{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:16px;padding:1.3rem;
+  display:flex;flex-direction:column;gap:11px;
+  transition:all .3s ease;
+  backdrop-filter:blur(5px);
+  position:relative;overflow:hidden;
+}
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,#00ffff,#ff00ff);
+  transform:scaleX(0);transition:transform .35s ease;
+}
+.card:hover{transform:translateY(-5px);border-color:rgba(0,255,255,0.3);box-shadow:0 12px 35px rgba(0,0,0,0.35);}
+.card:hover::before{transform:scaleX(1);}
+
+.card-cat-badge{
+  font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.8px;padding:3px 8px;border-radius:20px;align-self:flex-start;
+}
+.card h3{font-size:15px;font-weight:700;line-height:1.4;color:#fff;}
+.card-specs{display:flex;flex-direction:column;gap:5px;}
+.card-spec-row{display:flex;justify-content:space-between;font-size:12px;color:#666;}
+.card-spec-row span:last-child{color:#bbb;}
+
+.add-btn{
+  padding:9px 14px;border:none;border-radius:10px;
+  background:linear-gradient(135deg,#00ffff,#0080ff);
+  color:#000;cursor:pointer;font-weight:700;font-size:13px;
+  transition:all .2s;
+}
+.add-btn:hover{transform:translateY(-1px);box-shadow:0 5px 15px rgba(0,255,255,0.35);}
+.add-btn:active{transform:scale(.97);}
+
+/* ── COMPARE BAR ── */
+.compare-bar{
+  position:fixed;bottom:38px;left:0;right:0;height:52px;
+  background:rgba(15,12,41,0.45);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-top:1px solid rgba(0,255,255,0.08);
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0 1.5rem;gap:12px;z-index:1000;
+}
+#compareBox{display:flex;gap:7px;flex-wrap:nowrap;overflow:hidden;flex:1;}
+.tag{
+  background:rgba(0,255,255,0.1);border:1px solid rgba(0,255,255,0.25);
+  padding:4px 10px;border-radius:8px;font-size:11px;color:#00ffff;white-space:nowrap;
+}
+.bar-actions{display:flex;gap:8px;flex-shrink:0;}
+
+.cmp-btn{
+  padding:7px 18px;border:none;border-radius:8px;
+  background:linear-gradient(135deg,#00ffff,#0080ff);
+  color:#000;cursor:pointer;font-weight:700;font-size:13px;
+  transition:all .2s;
+}
+.cmp-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,255,255,0.3);}
+
+.clear-btn{
+  padding:7px 14px;border:none;border-radius:8px;
+  background:rgba(255,255,255,0.07);color:#888;
+  cursor:pointer;font-size:12px;font-weight:600;
+  transition:background .15s,color .15s;
+}
+.clear-btn:hover{background:rgba(255,255,255,0.12);color:#eee;}
+
+/* ── COMPARE TABLE ── */
+.compare-wrap{padding:1.5rem;overflow-x:auto;}
+.compare-wrap::-webkit-scrollbar{height:5px;}
+.compare-wrap::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px;}
+
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px;border-radius:12px;overflow:hidden;}
+th,td{padding:11px 16px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.06);}
+th{background:rgba(0,255,255,0.08);color:#00ffff;font-size:11px;text-transform:uppercase;letter-spacing:.6px;font-weight:700;}
+td:first-child{text-align:left;color:#666;font-size:12px;white-space:nowrap;font-weight:500;
+  background:rgba(15,12,41,0.6);position:sticky;left:0;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,0.02);}
+tr:hover td:first-child{background:rgba(15,12,41,0.7);}
+
+.en-iyi{background:rgba(0,255,127,0.12)!important;color:#00ff7f!important;font-weight:600;}
+.en-iyi::after{content:' ▲';font-size:10px;opacity:.7;}
+.en-kotu{background:rgba(255,60,60,0.1)!important;color:#ff6b6b!important;font-weight:600;}
+.en-kotu::after{content:' ▼';font-size:10px;opacity:.7;}
+.orta{color:#ccc;}
+.esit{background:rgba(255,255,0,0.07)!important;color:#ffff00!important;}
+
+/* ── BACK BTN ── */
+.back-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  margin:1.5rem 1.5rem 0;
+  background:rgba(255,255,255,0.07);color:#888;
+  font-size:13px;padding:8px 14px;border-radius:9px;
+  border:1px solid rgba(255,255,255,0.1);cursor:pointer;
+  transition:background .15s,color .15s;
+}
+.back-btn:hover{background:rgba(255,255,255,0.12);color:#eee;}
+
+/* ── COLOR LEGEND ── */
+.legend{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;
+  margin:1.5rem;padding:1rem 1.5rem;
+  background:rgba(255,255,255,0.03);border-radius:12px;
+  border:1px solid rgba(255,255,255,0.05);}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:12px;color:#888;}
+.legend-dot{width:10px;height:10px;border-radius:50%;}
+
+/* ── SINGLE PRODUCT ── */
+.single-wrap{padding:1.5rem;overflow-y:auto;}
+.single-title{font-size:1.5rem;font-weight:800;
+  background:linear-gradient(90deg,#00ffff,#ff00ff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:.3rem;}
+.single-sub{color:#888;font-size:13px;margin-bottom:1.2rem;}
+
+/* ── SCROLLBAR GLOBAL ── */
+html::-webkit-scrollbar{width:6px;}
+html::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);}
+
+/* ── CONTENT PAGES ── */
+.content-page{flex:1;overflow-y:auto;padding:2rem;}
+.content-page::-webkit-scrollbar{width:5px;}
+.content-page::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px;}
+
+/* ── ANASAYFA ── */
+.home-page{
+  flex:1;overflow-y:auto;
+  display:flex;flex-direction:column;
+  align-items:center;
+  padding:3rem 2rem 2rem;
+}
+.hero{text-align:center;max-width:680px;margin-bottom:3.5rem;}
+.hero h1{
+  font-size:3rem;font-weight:900;line-height:1.15;
+  background:linear-gradient(90deg,#00ffff,#ff00ff,#ffff00);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:1rem;
+  animation:heroGlow 4s ease-in-out infinite;
+}
+@keyframes heroGlow{0%,100%{filter:brightness(1);}50%{filter:brightness(1.25);}}
+.hero p{font-size:1.1rem;color:#777;line-height:1.7;margin-bottom:2rem;}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.hero-btn-primary{
+  padding:12px 28px;border:none;border-radius:12px;cursor:pointer;
+  background:linear-gradient(135deg,#00ffff,#0080ff);
+  color:#000;font-weight:700;font-size:14px;
+  transition:all .25s;box-shadow:0 4px 18px rgba(0,255,255,0.25);
+  font-family:inherit;
+}
+.hero-btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,255,255,0.35);}
+.hero-btn-secondary{
+  padding:12px 28px;border-radius:12px;cursor:pointer;
+  background:rgba(255,255,255,0.07);color:#aaa;font-weight:600;font-size:14px;
+  border:1px solid rgba(255,255,255,0.12);transition:all .25s;
+  font-family:inherit;
+}
+.hero-btn-secondary:hover{background:rgba(255,255,255,0.12);color:#eee;}
+
+/* KATEGORİ KARTLARI */
+.home-cats{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:1rem;width:100%;max-width:860px;
+}
+.home-cat-card{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:16px;padding:1.5rem 1rem;
+  text-align:center;cursor:pointer;
+  transition:all .35s ease;
+  position:relative;overflow:hidden;
+  backdrop-filter:blur(4px);
+}
+.home-cat-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,#00ffff,#ff00ff);
+  transform:scaleX(0);transition:transform .35s ease;
+}
+.home-cat-card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(0,255,255,0.25);
+  box-shadow:0 14px 36px rgba(0,0,0,0.35);
+  background:rgba(255,255,255,0.07);
+}
+.home-cat-card:hover::before{transform:scaleX(1);}
+.home-cat-icon{font-size:2.4rem;margin-bottom:.7rem;display:block;}
+.home-cat-card h3{color:#fff;font-size:1rem;margin-bottom:.3rem;}
+.home-cat-card p{color:#555;font-size:.8rem;}
+
+/* ── FOOTER ── */
+footer{
+  text-align:center;
+  padding:.85rem 2rem;
+  font-size:12px;color:#333;
+  border-top:1px solid rgba(255,255,255,0.05);
+  background:rgba(15,12,41,0.45);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  letter-spacing:.3px;
+  position:fixed;bottom:0;left:0;right:0;
+  z-index:999;
+}
+footer .footer-inner{display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;}
+footer .made-by{color:#555;}
+footer .made-by span{color:#00ffff;font-weight:600;}
+footer .copy{color:#333;}
+
+/* ── REHBERLER SAYFASI ── */
+.rehberler-wrap{padding:2rem;max-width:960px;margin:0 auto;}
+.rehberler-wrap h1{
+  font-size:1.6rem;font-weight:800;
+  background:linear-gradient(90deg,#00ffff,#ff00ff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:.4rem;
+}
+.rehberler-wrap .subtitle{color:#666;font-size:13px;margin-bottom:2rem;}
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:1.5rem;}
+.video-card{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:16px;overflow:hidden;
+  transition:all .3s;
+}
+.video-card:hover{border-color:rgba(0,255,255,0.25);transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+.video-thumb{position:relative;width:100%;padding-top:56.25%;}
+.video-thumb iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;}
+.video-info{padding:1rem 1.2rem 1.2rem;}
+.video-info h3{font-size:14px;font-weight:700;color:#fff;margin-bottom:.4rem;line-height:1.4;}
+.video-info p{font-size:12px;color:#666;line-height:1.5;}
+.video-tag{
+  display:inline-block;margin-top:.7rem;
+  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;
+  padding:3px 9px;border-radius:20px;
+  background:rgba(0,255,255,0.1);color:#00ffff;
+}
+
+/* ── HABERLER SAYFASI ── */
+.haberler-wrap{padding:2rem;max-width:960px;margin:0 auto;}
+.haberler-wrap h1{
+  font-size:1.6rem;font-weight:800;
+  background:linear-gradient(90deg,#00ffff,#ff00ff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:.4rem;
+}
+.haberler-wrap .subtitle{color:#666;font-size:13px;margin-bottom:2rem;}
+.haber-liste{display:flex;flex-direction:column;gap:1rem;}
+.haber-card{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:14px;padding:1.3rem 1.5rem;
+  display:flex;gap:1.2rem;align-items:flex-start;
+  transition:all .25s;
+  position:relative;overflow:hidden;
+}
+.haber-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,#00ffff,#ff00ff);
+  transform:scaleY(0);transition:transform .3s;transform-origin:top;
+}
+.haber-card:hover{border-color:rgba(0,255,255,0.2);background:rgba(255,255,255,0.06);}
+.haber-card:hover::before{transform:scaleY(1);}
+.haber-icon{
+  width:44px;height:44px;border-radius:12px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+}
+.haber-body{flex:1;}
+.haber-body h3{font-size:15px;font-weight:700;color:#fff;margin-bottom:.4rem;line-height:1.4;}
+.haber-body p{font-size:13px;color:#777;line-height:1.6;}
+.haber-meta{display:flex;gap:10px;align-items:center;margin-top:.7rem;}
+.haber-kat{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;padding:2px 8px;border-radius:20px;}
+.haber-tarih{font-size:11px;color:#555;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">⚡ Donanımları Karşılaştır</span>
+  <div class="nav-search">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+    <input type="text" id="searchInput" placeholder="Ürün ara..." oninput="aramaYap(this.value)">
+  </div>
+  <div class="nav-links">
+    <button class="nav-link active" id="navHome" onclick="goHome()">Ana Sayfa</button>
+    <button class="nav-link" id="navProducts" onclick="goProducts()">Ürünler</button>
+    <button class="nav-link" id="navRehberler" onclick="goRehberler()">Rehberler</button>
+    <button class="nav-link" id="navHaberler" onclick="goHaberler()">Haberler</button>
+  </div>
+</nav>
+
+<!-- ANASAYFA -->
+<div id="homePage" class="app-body" style="display:flex;align-items:flex-start;">
+  <div class="home-page" id="homePageInner"></div>
+</div>
+
+<!-- ÜRÜNLER SAYFASI -->
+<div id="productsPage" class="app-body" style="display:none;">
+  <div class="sidebar" id="sidebar"></div>
+  <div class="main" id="main"></div>
+</div>
+
+<!-- REHBERLER SAYFASI -->
+<div id="rehberlerPage" class="app-body" style="display:none;overflow-y:auto;">
+  <div class="rehberler-wrap">
+    <h1>📺 Donanım Rehberleri</h1>
+    <p class="subtitle">GPU ve diğer donanımlar hakkında kapsamlı karşılaştırma ve inceleme videoları</p>
+    <div class="video-grid">
+      <div class="video-card">
+        <div class="video-thumb">
+          <iframe src="https://www.youtube.com/embed/SZsPYM3KfP4" title="YouTube video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <h3>RX 9070 XT vs RTX 5070 Ti — Hangisi Daha İyi?</h3>
+          <p>AMD'nin RDNA 4 mimarisi mi, yoksa NVIDIA'nın Blackwell ailesi mi? Gerçek dünya testleri ve fiyat/performans analizi.</p>
+          <span class="video-tag">GPU Karşılaştırma</span>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb">
+          <iframe src="https://www.youtube.com/embed/a3I5Mpynzzs" title="YouTube video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <h3>2025 Yılında Hangi GPU'yu Almalısınız?</h3>
+          <p>Bütçe dostu seçeneklerden üst segment kartlara kadar 2025'in en iyi ekran kartı rehberi.</p>
+          <span class="video-tag">Alım Rehberi</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HABERLER SAYFASI -->
+<div id="haberlerPage" class="app-body" style="display:none;overflow-y:auto;">
+  <div class="haberler-wrap">
+    <h1>📰 Donanım Haberleri</h1>
+    <p class="subtitle">PC donanım dünyasından güncel gelişmeler</p>
+    <div class="haber-liste">
+      <div class="haber-card">
+        <div class="haber-icon" style="background:rgba(255,100,50,.12)">🎮</div>
+        <div class="haber-body">
+          <h3>AMD RX 9070 XT Satışa Çıktı: Piyasa Fiyatları Beklentilerin Altında</h3>
+          <p>AMD'nin RDNA 4 mimarisine dayanan RX 9070 XT, 549 dolar önerilen satış fiyatıyla raflardaki yerini aldı. İlk hafta stok durumu bölgeye göre farklılık gösterse de Türkiye'de 29.000 TL civarında fiyatlanan kart, fiyat/performans açısından güçlü bir rakip olarak öne çıkıyor. 16 GB GDDR6 bellek ve 256-bit bellek yolu ile gelen kart, 1440p oyunculara hitap ediyor.</p>
+          <div class="haber-meta">
+            <span class="haber-kat" style="background:rgba(255,100,50,.15);color:#ff7043">GPU</span>
+            <span class="haber-tarih">🕐 Mart 2025</span>
+          </div>
+        </div>
+      </div>
+      <div class="haber-card">
+        <div class="haber-icon" style="background:rgba(100,180,255,.12)">🧠</div>
+        <div class="haber-body">
+          <h3>Intel Arrow Lake Refresh Geliyor: Core Ultra 300 Serisi Sızdırıldı</h3>
+          <p>Sızıntılara göre Intel, Arrow Lake mimarisinin güncellenmiş versiyonu olan Core Ultra 300 serisini 2025'in ikinci yarısında tanıtmayı planlıyor. Yeni işlemcilerin özellikle oyun performansında Arrow Lake'in zayıf kaldığı IPC ve gecikme sorunlarını gidermeye odaklanacağı belirtiliyor. LGA1851 soketiyle mevcut Z890 anakartlarla uyumlu kalması bekleniyor.</p>
+          <div class="haber-meta">
+            <span class="haber-kat" style="background:rgba(100,180,255,.15);color:#64b5f6">CPU</span>
+            <span class="haber-tarih">🕐 Nisan 2025</span>
+          </div>
+        </div>
+      </div>
+      <div class="haber-card">
+        <div class="haber-icon" style="background:rgba(50,220,130,.12)">💾</div>
+        <div class="haber-body">
+          <h3>Samsung 9100 Pro NVMe SSD: PCIe 5.0'da Yeni Hız Rekoru</h3>
+          <p>Samsung'un yeni amiral gemisi SSD'si olan 9100 Pro, PCIe 5.0 arayüzüyle saniyede 14,8 GB'a varan sıralı okuma hızına ulaşıyor. TLC NAND kullanan ve özel tasarımlı kontrolcüsüyle dikkat çeken kart, özellikle profesyonel içerik üretimi ve büyük veri aktarımlarında öne çıkıyor. Fiyatlandırmanın 1 TB için 180-200 dolar bandında olması bekleniyor.</p>
+          <div class="haber-meta">
+            <span class="haber-kat" style="background:rgba(50,220,130,.15);color:#4db6ac">SSD</span>
+            <span class="haber-tarih">🕐 Nisan 2025</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPARE BAR -->
+<div class="compare-bar">
+  <div id="compareBox"><span style="color:#444;font-size:12px;">Karşılaştırmak istediğiniz ürünleri seçin</span></div>
+  <div class="bar-actions">
+    <button class="cmp-btn" onclick="karsilastir()">Karşılaştır</button>
+    <button class="clear-btn" onclick="temizle()">Temizle</button>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="made-by">Yapıldı: <span>Yeşil</span> tarafından</span>
+    <span class="copy">© 2026 Donanımları Karşılaştır — Tüm hakları saklıdır.</span>
+  </div>
+</footer>
+
+<script>
+/* ══════════════════════════════
+   VERİ
+══════════════════════════════ */
+const kategoriler=[
+  {id:"gpu", ad:"GPU",     icon:"🎮"},
+  {id:"cpu", ad:"CPU",     icon:"🧠"},
+  {id:"ana", ad:"Anakart", icon:"🖥️"},
+  {id:"ssd", ad:"SSD",     icon:"💾"},
+  {id:"ram", ad:"RAM",     icon:"🗂️"},
+];
+
+const katRenk={
+  gpu:{bg:"rgba(255,100,50,.18)",  color:"#ff7043"},
+  cpu:{bg:"rgba(100,180,255,.15)", color:"#64b5f6"},
+  ana:{bg:"rgba(180,100,255,.15)", color:"#ce93d8"},
+  ssd:{bg:"rgba(50,220,130,.15)",  color:"#4db6ac"},
+  ram:{bg:"rgba(255,200,50,.15)",  color:"#ffd54f"},
+};
+
+const katAlanlar={
+  gpu:{
+    alanlar:["gpuAdi","mimari","uretim","cikis","shader","rtCekirdegi","fp32","boostSaat","vram","bellekTipi","bellekYolu","bantGenisligi","tdp"],
+    etiketler:{gpuAdi:"GPU Adı",mimari:"Mimari",uretim:"Üretim",cikis:"Çıkış Tarihi",shader:"Shader Sayısı",rtCekirdegi:"RT Çekirdeği",fp32:"FP32 (TFLOPS)",boostSaat:"Boost Saat (MHz)",vram:"VRAM (GB)",bellekTipi:"Bellek Tipi",bellekYolu:"Bellek Yolu (bit)",bantGenisligi:"Bant Genişliği (GB/s)",tdp:"TDP (W)"}
+  },
+  cpu:{
+    alanlar:["cekirdek","is_parcacigi","taban_saat","boost_saat","onbellek","tdp","soket","uretim","cikis"],
+    etiketler:{cekirdek:"Çekirdek Sayısı",is_parcacigi:"İş Parçacığı",taban_saat:"Taban Saat (GHz)",boost_saat:"Boost Saat (GHz)",onbellek:"Önbellek (MB)",tdp:"TDP (W)",soket:"Soket",uretim:"Üretim",cikis:"Çıkış Tarihi"}
+  },
+  ana:{
+    alanlar:["soket","chipset","form_faktoru","bellek_tipi","bellek_yuvasi","max_bellek","pcie_surumu","m2_yuvasi","cikis"],
+    etiketler:{soket:"Soket",chipset:"Chipset",form_faktoru:"Form Faktörü",bellek_tipi:"Bellek Tipi",bellek_yuvasi:"Bellek Yuvası",max_bellek:"Maks. Bellek (GB)",pcie_surumu:"PCIe Sürümü",m2_yuvasi:"M.2 Yuvası",cikis:"Çıkış Tarihi"}
+  },
+  ssd:{
+    alanlar:["kapasite","arayuz","form_faktoru","okuma","yazma","nand_tipi","nand_uretici","cikis"],
+    etiketler:{kapasite:"Kapasite",arayuz:"Arayüz",form_faktoru:"Form Faktörü",okuma:"Seq. Okuma (MB/s)",yazma:"Seq. Yazma (MB/s)",nand_tipi:"NAND Tipi",nand_uretici:"NAND Üreticisi",cikis:"Çıkış Tarihi"}
+  },
+  ram:{
+    alanlar:["kapasite","tip","hiz","gecikme","voltaj","cikis"],
+    etiketler:{kapasite:"Kapasite",tip:"Tip",hiz:"Hız (MHz)",gecikme:"CL Gecikme",voltaj:"Voltaj (V)",cikis:"Çıkış Tarihi"}
+  },
+};
+
+const urunler=[
+  {id:1,kategori:"gpu",isim:"AMD Radeon RX 9070 XT",gpuAdi:"Navi 48 XTX",mimari:"RDNA 4.0",uretim:"4 nm",cikis:"06.03.2025",shader:4096,rtCekirdegi:64,fp32:48.66,boostSaat:2970,vram:16,bellekTipi:"GDDR6",bellekYolu:256,bantGenisligi:644.6,tdp:304},
+  {id:2,kategori:"gpu",isim:"NVIDIA RTX 5070 Ti",gpuAdi:"GB203",mimari:"Blackwell",uretim:"5 nm",cikis:"20.02.2025",shader:8960,rtCekirdegi:70,fp32:43.94,boostSaat:2452,vram:16,bellekTipi:"GDDR7",bellekYolu:256,bantGenisligi:896,tdp:300},
+];
+
+/* ══════════════════════════════
+   STATE
+══════════════════════════════ */
+let aktifKat="gpu";
+let aramaMetni="";
+let karsilastirma=[];
+
+/* ══════════════════════════════
+   HELPERS
+══════════════════════════════ */
+function filtreliUrunler(){
+  return urunler.filter(u=>
+    u.kategori===aktifKat &&
+    u.isim.toLowerCase().includes(aramaMetni.toLowerCase())
+  );
+}
+
+function previewSatirlar(u){
+  const maps={
+    gpu:[["Mimari",u.mimari],["VRAM",u.vram+" GB "+u.bellekTipi],["FP32",u.fp32+" TFLOPS"],["TDP",u.tdp+" W"]],
+    cpu:[["Çekirdek",u.cekirdek],["Boost",(u.boost_saat??"-")+" GHz"],["Önbellek",(u.onbellek??"-")+" MB"],["TDP",(u.tdp??"-")+" W"]],
+    ana:[["Soket",u.soket??"-"],["Chipset",u.chipset??"-"],["Form",u.form_faktoru??"-"],["Bellek",u.bellek_tipi??"-"]],
+    ssd:[["Kapasite",u.kapasite??"-"],["Arayüz",u.arayuz??"-"],["Okuma",(u.okuma??"-")+" MB/s"],["Yazma",(u.yazma??"-")+" MB/s"]],
+    ram:[["Kapasite",u.kapasite??"-"],["Tip",u.tip??"-"],["Hız",(u.hiz??"-")+" MHz"],["CL",u.gecikme??"-"]],
+  };
+  return (maps[u.kategori]||[]).map(([k,v])=>`
+    <div class="card-spec-row"><span>${k}</span><span>${v??"-"}</span></div>
+  `).join("");
+}
+
+/* ══════════════════════════════
+   SAYFA NAVİGASYONU
+══════════════════════════════ */
+const tumSayfalar=["homePage","productsPage","rehberlerPage","haberlerPage"];
+const tumNavler=["navHome","navProducts","navRehberler","navHaberler"];
+
+function sayfaGoster(sayfaId, navId){
+  tumSayfalar.forEach(id=>{document.getElementById(id).style.display="none";});
+  tumNavler.forEach(id=>{document.getElementById(id).classList.remove("active");});
+  document.getElementById(sayfaId).style.display="flex";
+  document.getElementById(navId).classList.add("active");
+}
+
+function goHome(){
+  sayfaGoster("homePage","navHome");
+  renderHome();
+}
+
+function goProducts(katId){
+  sayfaGoster("productsPage","navProducts");
+  if(katId) aktifKat=katId;
+  renderSidebar();
+  renderGrid();
+}
+
+function goRehberler(){
+  sayfaGoster("rehberlerPage","navRehberler");
+}
+
+function goHaberler(){
+  sayfaGoster("haberlerPage","navHaberler");
+}
+
+/* ══════════════════════════════
+   RENDER: ANASAYFA
+══════════════════════════════ */
+function renderHome(){
+  const el=document.getElementById("homePageInner");
+  if(!el)return;
+  const toplamUrun=urunler.length;
+  el.innerHTML=`
+    <div class="hero">
+      <h1>Donanımları Karşılaştır</h1>
+      <p>
+        Hangi ekran kartı, işlemci ya da bellek sana daha uygun?<br>
+        Teknik özellikleri yan yana koy, doğru kararı ver.<br>
+        <span style="color:#555;font-size:.95rem;">Şu an veritabanında <strong style="color:#00ffff">${toplamUrun}</strong> ürün bulunuyor.</span>
+      </p>
+      <div class="hero-btns">
+        <button class="hero-btn-primary" onclick="goProducts()">Ürünleri Keşfet</button>
+        <button class="hero-btn-secondary" onclick="goProducts()">Karşılaştırmaya Başla</button>
+      </div>
+    </div>
+    <div class="home-cats">
+      ${kategoriler.map(k=>{
+        const sayi=urunler.filter(u=>u.kategori===k.id).length;
+        const r=katRenk[k.id]||{color:"#aaa"};
+        const aciklamalar={gpu:"Ekran kartlarını karşılaştır",cpu:"İşlemcileri karşılaştır",ana:"Anakartları karşılaştır",ssd:"SSD'leri karşılaştır",ram:"RAM'leri karşılaştır"};
+        return `<div class="home-cat-card" onclick="goProducts('${k.id}')">
+          <span class="home-cat-icon">${k.icon}</span>
+          <h3 style="color:${r.color}">${k.ad}</h3>
+          <p>${aciklamalar[k.id]||""}</p>
+          <p style="margin-top:.4rem;font-size:.75rem;color:#444;">${sayi} ürün</p>
+        </div>`;
+      }).join("")}
+    </div>`;
+}
+
+/* ══════════════════════════════
+   RENDER: SIDEBAR
+══════════════════════════════ */
+function renderSidebar(){
+  const el=document.getElementById("sidebar");
+  if(!el)return;
+  const sayilar={};
+  kategoriler.forEach(k=>{sayilar[k.id]=urunler.filter(u=>u.kategori===k.id).length;});
+  el.innerHTML=`<div class="sidebar-label">Kategoriler</div>`+
+    kategoriler.map(k=>`
+      <button class="cat-btn ${k.id===aktifKat?'active':''}" onclick="katSec('${k.id}')">
+        <span>${k.icon}</span>
+        <span>${k.ad}</span>
+        <span class="cat-count">${sayilar[k.id]}</span>
+      </button>
+    `).join("");
+}
+
+/* ══════════════════════════════
+   RENDER: GRID
+══════════════════════════════ */
+function renderGrid(){
+  const main=document.getElementById("main");
+  if(!main)return;
+  const liste=filtreliUrunler();
+  const r=katRenk[aktifKat]||{bg:"#222",color:"#aaa"};
+  const katAd=kategoriler.find(k=>k.id===aktifKat)?.ad||"";
+
+  let inner="";
+  if(liste.length===0){
+    inner=`<div class="empty-state">
+      <svg width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <span>${aramaMetni?'"'+aramaMetni+'" için sonuç bulunamadı':'Bu kategoride henüz ürün yok'}</span>
+    </div>`;
+  } else {
+    inner=liste.map(u=>`
+      <div class="card">
+        <span class="card-cat-badge" style="background:${r.bg};color:${r.color}">${katAd}</span>
+        <h3>${u.isim}</h3>
+        <div class="card-specs">${previewSatirlar(u)}</div>
+        <button class="add-btn" onclick="ekle(${u.id})">+ Karşılaştır</button>
+      </div>
+    `).join("");
+  }
+  main.innerHTML=`<div class="grid">${inner}</div>`;
+}
+
+/* ══════════════════════════════
+   KARŞILAŞTIRMA TABLOSU
+══════════════════════════════ */
+function karsilastir(){
+  if(karsilastirma.length<1){alert("En az 1 ürün seç");return;}
+  const kat=karsilastirma[0].kategori;
+  const {alanlar,etiketler}=katAlanlar[kat]||{alanlar:[],etiketler:{}};
+  const tek=karsilastirma.length===1;
+
+  let tablo=`<table><thead><tr><th>Özellik</th>`;
+  karsilastirma.forEach(u=>{tablo+=`<th>${u.isim}</th>`;});
+  tablo+=`</tr></thead><tbody>`;
+
+  alanlar.forEach(a=>{
+    const degerler=karsilastirma.map(u=>u[a]??"-");
+    const sayisal=degerler.filter(v=>typeof v==="number");
+    const max=sayisal.length?Math.max(...sayisal):null;
+    const min=sayisal.length?Math.min(...sayisal):null;
+    tablo+=`<tr><td>${etiketler[a]||a}</td>`;
+    degerler.forEach(v=>{
+      let cls="orta";
+      if(!tek && typeof v==="number"){
+        if(max===min) cls="esit";
+        else if(v===max) cls="en-iyi";
+        else if(v===min) cls="en-kotu";
+      }
+      tablo+=`<td class="${cls}">${v}</td>`;
+    });
+    tablo+=`</tr>`;
+  });
+  tablo+=`</tbody></table>`;
+
+  const legend=tek?"":`
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(0,255,127,.5)"></div> Üstün Özellik ▲</div>
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(255,60,60,.5)"></div> Zayıf Özellik ▼</div>
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(255,255,0,.4)"></div> Eşit Özellik</div>
+    </div>`;
+
+  document.getElementById("main").innerHTML=`
+    <div style="overflow-y:auto;height:100%;">
+      <button class="back-btn" onclick="renderGrid()">← Geri</button>
+      <div class="compare-wrap">${tablo}</div>
+      ${legend}
+    </div>`;
+}
+
+/* ══════════════════════════════
+   ACTIONS
+══════════════════════════════ */
+function katSec(id){
+  aktifKat=id;karsilastirma=[];guncelleBar();
+  const si=document.getElementById("searchInput");
+  if(si){si.value="";aramaMetni="";}
+  renderSidebar();renderGrid();
+}
+function aramaYap(v){aramaMetni=v;renderGrid();}
+function ekle(id){
+  const u=urunler.find(x=>x.id===id);
+  if(!u)return;
+  if(karsilastirma.length>=4)return;
+  if(karsilastirma.find(x=>x.id===id))return;
+  if(karsilastirma.length>0 && karsilastirma[0].kategori!==u.kategori){
+    alert("Aynı kategorideki ürünleri karşılaştırabilirsiniz.");return;
+  }
+  karsilastirma.push(u);guncelleBar();
+}
+function guncelleBar(){
+  const box=document.getElementById("compareBox");
+  if(!box)return;
+  if(karsilastirma.length===0){
+    box.innerHTML=`<span style="color:#444;font-size:12px;">Karşılaştırmak istediğiniz ürünleri seçin</span>`;
+  } else {
+    box.innerHTML=karsilastirma.map(u=>`<span class="tag">${u.isim}</span>`).join("");
+  }
+}
+function temizle(){karsilastirma=[];guncelleBar();renderGrid();}
+
+/* ══════════════════════════════
+   BOOT
+══════════════════════════════ */
+goHome();
+</script>
+</body>
+</html>
