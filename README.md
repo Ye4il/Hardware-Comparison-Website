@@ -2,4 +2,4 @@ This is a Hardware Comparison Website. And have too many other features. You nee
 Bu bir Donanım karşılaştırma sitesidir. Ancak içinde rehberler,haberler gibi bir çok farklı özellik vardır. Denemelisiniz.
 https://ye4il.github.io/Hardware-Comparison-Website/
 
-Not Finished
+Not Finished. I'm trying to find time to update it.
