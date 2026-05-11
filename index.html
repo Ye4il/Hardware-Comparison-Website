@@ -1030,8 +1030,8 @@ const katAlanlar={
     etiketler:{kapasite:"Kapasite",tip:"Tip",hiz:"Hız (MHz)",gecikme:"CL Gecikme",voltaj:"Voltaj (V)",cikis:"Çıkış Tarihi"}
   },
   gamepad:{
-    alanlar:["baglanti","platform","batarya","titresim","analogSayisi","extra","cikis"],
-    etiketler:{baglanti:"Bağlantı",platform:"Platform",batarya:"Batarya Ömrü (saat)",titresim:"Titreşim",analogSayisi:"Analog Sayısı",extra:"Ekstra Özellik",cikis:"Çıkış Tarihi"}
+    alanlar:["stickTech","triggerTech","butonTech","agirlik","baglanti","batarya","pollingWired","pollingDongle"],
+    etiketler:{stickTech:"Stick Teknolojisi",triggerTech:"Trigger Teknolojisi",butonTech:"Buton Teknolojisi",agirlik:"Ağırlık (g)",baglanti:"Bağlantı",batarya:"Batarya",pollingWired:"Polling Rate Kablolu",pollingDongle:"Polling Rate Dongle"}
   },
   monitor:{
     alanlar:["panel","cozunurluk","boyut","yenilemeHizi","yanitSuresi","hdr","baglanti","cikis"],
@@ -1056,6 +1056,76 @@ const urunler=[
   {id:7,kategori:"gpu",isim:"AMD Radeon RX 6900 XT",gpuAdi:"Navi 21",mimari:"RDNA 2.0",islemSureci:"7 nm",cikis:"28.10.2020",shader:5120,rtCekirdegi:80,fp32:23.04,boostFrekans:2250,vram:16,bellekTipi:"GDDR6",bellekYolu:256,bantGenisligi:512.0,tdp:300,psu:700,busInterface:"PCIe 4.0 x16"},
   {id:8,kategori:"gpu",isim:"NVIDIA GeForce RTX 5060",gpuAdi:"GB206",mimari:"Blackwell 2.0",islemSureci:"5 nm",cikis:"19.05.2025",shader:3840,rtCekirdegi:30,fp32:19.18,boostFrekans:2497,vram:8,bellekTipi:"GDDR7",bellekYolu:128,bantGenisligi:448.0,tdp:145,psu:300,busInterface:"PCIe 5.0 x8"},
   {id:6,kategori:"gpu",isim:"AMD Radeon RX 9060 XT",gpuAdi:"Navi 44",mimari:"RDNA 4.0",islemSureci:"4 nm",cikis:"04.06.2025",shader:2048,rtCekirdegi:32,fp32:25.64,boostFrekans:3130,vram:16,bellekTipi:"GDDR6",bellekYolu:128,bantGenisligi:322.3,tdp:160,psu:450,busInterface:"PCIe 5.0 x16"},
+  // ── GAMEPAD ──
+  {id:101,kategori:"gamepad",isim:"GameSir Super Nova",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:263,baglanti:"Kablolu/Dongle/BT",batarya:"1000 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:102,kategori:"gamepad",isim:"GameSir Cyclone 2",stickTech:"TMR",triggerTech:"Hall Effect",butonTech:"Mechanical",agirlik:229,baglanti:"Kablolu/Dongle/BT",batarya:"860 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:103,kategori:"gamepad",isim:"GameSir Tarantula Pro",stickTech:"TMR",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:325,baglanti:"Kablolu/Dongle/BT",batarya:"1200 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:104,kategori:"gamepad",isim:"GameSir Tegeneria Lite",stickTech:"Hall Effect",triggerTech:"Standard",butonTech:"Membrane",agirlik:230,baglanti:"Kablolu",batarya:"-",pollingWired:"1000 Hz",pollingDongle:"-"},
+  {id:105,kategori:"gamepad",isim:"GameSir Nova Lite",stickTech:"Hall Effect",triggerTech:"Standard",butonTech:"Membrane",agirlik:205,baglanti:"Kablolu/Dongle/BT",batarya:"600 mAh",pollingWired:"1000 Hz",pollingDongle:"125 Hz"},
+  {id:106,kategori:"gamepad",isim:"GameSir Nova 2 Lite",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:225,baglanti:"Kablolu/Dongle/BT",batarya:"600 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:107,kategori:"gamepad",isim:"GameSir T7",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:210,baglanti:"Kablolu",batarya:"-",pollingWired:"250 Hz",pollingDongle:"-"},
+  {id:108,kategori:"gamepad",isim:"GameSir G7",stickTech:"Potentiometer",triggerTech:"Hall Effect",butonTech:"Mechanical",agirlik:256,baglanti:"Kablolu",batarya:"-",pollingWired:"250 Hz",pollingDongle:"-"},
+  {id:109,kategori:"gamepad",isim:"GameSir G7 SE",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:221,baglanti:"Kablolu",batarya:"-",pollingWired:"250 Hz",pollingDongle:"-"},
+  {id:110,kategori:"gamepad",isim:"GameSir G7 HE",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Mechanical",agirlik:227,baglanti:"Kablolu",batarya:"-",pollingWired:"250 Hz",pollingDongle:"-"},
+  {id:111,kategori:"gamepad",isim:"GameSir G7 Pro Tri-Mode",stickTech:"TMR",triggerTech:"Hall Effect",butonTech:"Mechanical",agirlik:272,baglanti:"Kablolu/Dongle/BT",batarya:"1200 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:112,kategori:"gamepad",isim:"GameSir G7 Pro ZZZ",stickTech:"TMR",triggerTech:"Hall Effect",butonTech:"Mechanical",agirlik:272,baglanti:"Kablolu/Dongle/BT",batarya:"1200 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:113,kategori:"gamepad",isim:"GameSir Nova HD Rumble",stickTech:"Hall Effect",triggerTech:"Standard",butonTech:"Membrane",agirlik:217,baglanti:"Kablolu/Dongle/BT",batarya:"1200 mAh",pollingWired:"500 Hz",pollingDongle:"180 Hz"},
+  {id:114,kategori:"gamepad",isim:"GameSir G7 Pro WUCHANG",stickTech:"TMR",triggerTech:"Hall Effect",butonTech:"Mechanical",agirlik:272,baglanti:"Kablolu/Dongle/BT",batarya:"1200 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:115,kategori:"gamepad",isim:"Fantech EOS Pro",stickTech:"K-Silver",triggerTech:"Standard",butonTech:"Membrane",agirlik:272,baglanti:"Kablolu/Dongle/BT",batarya:"600 mAh",pollingWired:"1000 Hz",pollingDongle:"125 Hz"},
+  {id:116,kategori:"gamepad",isim:"Fantech EOS Pro II",stickTech:"K-Silver",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:272,baglanti:"Kablolu/Dongle/BT",batarya:"1000 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:117,kategori:"gamepad",isim:"Fantech EOS Pro II S",stickTech:"TMR",triggerTech:"Hall Effect",butonTech:"Mechanical",agirlik:272,baglanti:"Kablolu/Dongle/BT",batarya:"1000 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:118,kategori:"gamepad",isim:"Fantech Shooter III WGP13S",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:194,baglanti:"Kablolu/Dongle/BT",batarya:"600 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:119,kategori:"gamepad",isim:"Fantech Shooter III X WGP13X",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:194,baglanti:"Kablolu/Dongle/BT",batarya:"-",pollingWired:"125 Hz",pollingDongle:"125 Hz"},
+  {id:120,kategori:"gamepad",isim:"Fantech Revolver III WGP12S",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:205,baglanti:"Kablolu/Dongle/BT",batarya:"600 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:121,kategori:"gamepad",isim:"Fantech Nova Pro V2 WGP14V2",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:289,baglanti:"BT5.0/Kablolu",batarya:"600 mAh",pollingWired:"250 Hz",pollingDongle:"250 Hz"},
+  {id:122,kategori:"gamepad",isim:"Fantech Nova II WGP16",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:222,baglanti:"Kablolu/BT 5.3",batarya:"600 mAh",pollingWired:"250 Hz",pollingDongle:"125 Hz"},
+  {id:123,kategori:"gamepad",isim:"Fantech Nova II D WGP16D",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:222,baglanti:"Kablolu/BT 5.3",batarya:"600 mAh",pollingWired:"250 Hz",pollingDongle:"125 Hz"},
+  {id:124,kategori:"gamepad",isim:"EasySMX S10",stickTech:"TMR",triggerTech:"Microswitch",butonTech:"Mechanical",agirlik:244,baglanti:"BT/Kablolu",batarya:"1200 mAh",pollingWired:"1000 Hz",pollingDongle:"125 Hz"},
+  {id:125,kategori:"gamepad",isim:"EasySMX S10 Lite",stickTech:"Hall Effect",triggerTech:"Microswitch",butonTech:"Membrane",agirlik:244,baglanti:"BT/Kablolu",batarya:"1000 mAh",pollingWired:"1000 Hz",pollingDongle:"125 Hz"},
+  {id:126,kategori:"gamepad",isim:"EasySMX D10",stickTech:"TMR",triggerTech:"Hall Effect & Microswitch",butonTech:"Mechanical",agirlik:256,baglanti:"Kablolu/Dongle/BT",batarya:"1000 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:127,kategori:"gamepad",isim:"EasySMX D05",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Hybrid Membrane",agirlik:300,baglanti:"Kablolu/Dongle/BT",batarya:"1000 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:128,kategori:"gamepad",isim:"EasySMX X20",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Mechanical",agirlik:226,baglanti:"Kablolu/Dongle/BT",batarya:"1000 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:129,kategori:"gamepad",isim:"EasySMX X15",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:228,baglanti:"Kablolu/Dongle/BT",batarya:"1000 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:130,kategori:"gamepad",isim:"EasySMX X10",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Mechanical",agirlik:355,baglanti:"Kablolu/Dongle/BT",batarya:"1000 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:131,kategori:"gamepad",isim:"EasySMX X05 Pro",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:262,baglanti:"Kablolu/Dongle/BT",batarya:"1000 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:132,kategori:"gamepad",isim:"EasySMX X05",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:218,baglanti:"Kablolu/Dongle/BT",batarya:"750 mAh",pollingWired:"1000 Hz",pollingDongle:"250 Hz"},
+  {id:133,kategori:"gamepad",isim:"ATK Battle Axe Pro",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Mechanical",agirlik:258,baglanti:"Kablolu/Dongle/BT",batarya:"1000 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:134,kategori:"gamepad",isim:"ATK Battle Axe",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:280,baglanti:"Kablolu/Dongle/BT",batarya:"1000 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:135,kategori:"gamepad",isim:"BIGBIG WON Aether",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Hybrid Membrane",agirlik:215,baglanti:"Kablolu/Dongle/BT",batarya:"600 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:136,kategori:"gamepad",isim:"BIGBIG WON Gale",stickTech:"12 Bit ADC",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:230,baglanti:"Kablolu/Dongle/BT",batarya:"1000 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:137,kategori:"gamepad",isim:"BIGBIG WON Gale Hall",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:230,baglanti:"Kablolu/Dongle/BT",batarya:"1000 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:138,kategori:"gamepad",isim:"BIGBIG WON Blitz",stickTech:"ALPS Potentiometer",triggerTech:"Microswitch",butonTech:"Mechanical",agirlik:"-",baglanti:"Kablolu/BT",batarya:"1000 mAh",pollingWired:"125-250 Hz",pollingDongle:"125-250 Hz"},
+  {id:139,kategori:"gamepad",isim:"BIGBIG WON Blitz 2",stickTech:"ALPS - TMR",triggerTech:"Microswitch",butonTech:"Mechanical",agirlik:"-",baglanti:"Kablolu/Dongle/BT",batarya:"1000 mAh",pollingWired:"2000 Hz",pollingDongle:"2000 Hz"},
+  {id:140,kategori:"gamepad",isim:"BIGBIG WON Rainbow 2 Pro",stickTech:"ALPS Potentiometer",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:212,baglanti:"Kablolu/Dongle/BT",batarya:"1000 mAh",pollingWired:"1000 Hz",pollingDongle:"200 Hz"},
+  {id:141,kategori:"gamepad",isim:"BEITONG KunPeng 20",stickTech:"TMR",triggerTech:"Hall Effect",butonTech:"Mechanical",agirlik:243,baglanti:"Kablolu/Dongle/BT",batarya:"600 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:142,kategori:"gamepad",isim:"BEITONG KunPeng 40",stickTech:"TMR",triggerTech:"TMR",butonTech:"Mechanical",agirlik:245,baglanti:"Kablolu/Dongle/BT",batarya:"1000 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:143,kategori:"gamepad",isim:"BEITONG KunPeng 70",stickTech:"Capacitive",triggerTech:"Hall Effect + Adaptive",butonTech:"Optical Mechanical",agirlik:"-",baglanti:"Kablolu/Dongle/BT",batarya:"1500 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:144,kategori:"gamepad",isim:"GuliKit ES",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:220,baglanti:"Kablolu/Dongle/BT",batarya:"950 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:145,kategori:"gamepad",isim:"GuliKit ES Pro",stickTech:"TMR",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:220,baglanti:"Kablolu/Dongle/BT",batarya:"950 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:146,kategori:"gamepad",isim:"GuliKit KK2 T",stickTech:"TMR",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:205,baglanti:"Kablolu/Dongle/BT",batarya:"950 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:147,kategori:"gamepad",isim:"GuliKit KK3 Max",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:220,baglanti:"Kablolu/Dongle/BT",batarya:"950 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:148,kategori:"gamepad",isim:"GuliKit KK3 Pro",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:247,baglanti:"Kablolu/Dongle/BT",batarya:"950 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:149,kategori:"gamepad",isim:"SONY DualShock",stickTech:"Potentiometer",triggerTech:"Standard",butonTech:"Membrane",agirlik:210,baglanti:"Kablolu/BT",batarya:"800-1000 mAh",pollingWired:"250 Hz",pollingDongle:"250 Hz"},
+  {id:150,kategori:"gamepad",isim:"SONY DualSense",stickTech:"Potentiometer",triggerTech:"Adaptive",butonTech:"Membrane",agirlik:280,baglanti:"Kablolu/BT",batarya:"1560 mAh",pollingWired:"250 Hz",pollingDongle:"250 Hz"},
+  {id:151,kategori:"gamepad",isim:"SONY DualSense Edge",stickTech:"Potentiometer",triggerTech:"Adaptive Adjustable",butonTech:"Membrane",agirlik:325,baglanti:"Kablolu/BT",batarya:"1050 mAh",pollingWired:"1000 Hz",pollingDongle:"250 Hz"},
+  {id:152,kategori:"gamepad",isim:"XBOX Gen 3",stickTech:"Potentiometer",triggerTech:"Standard",butonTech:"Membrane",agirlik:287,baglanti:"Kablolu/BT",batarya:"AA Pil",pollingWired:"250 Hz",pollingDongle:"125 Hz"},
+  {id:153,kategori:"gamepad",isim:"XBOX Elite Series 2",stickTech:"Potentiometer",triggerTech:"Standard",butonTech:"Membrane",agirlik:345,baglanti:"Kablolu/BT",batarya:"2050 mAh",pollingWired:"125 Hz",pollingDongle:"125 Hz"},
+  {id:154,kategori:"gamepad",isim:"PXN P5 8K",stickTech:"Capacitive",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:221,baglanti:"Kablolu/Dongle/BT",batarya:"1000 mAh",pollingWired:"8000 Hz",pollingDongle:"8000 Hz"},
+  {id:155,kategori:"gamepad",isim:"PXN P5",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:221,baglanti:"Kablolu/Dongle/BT",batarya:"1000 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:156,kategori:"gamepad",isim:"Logitech F310",stickTech:"Potentiometer",triggerTech:"Potentiometer",butonTech:"Membrane",agirlik:370,baglanti:"Kablolu",batarya:"-",pollingWired:"125 Hz",pollingDongle:"-"},
+  {id:157,kategori:"gamepad",isim:"Logitech F710",stickTech:"Potentiometer",triggerTech:"Potentiometer",butonTech:"Membrane",agirlik:285,baglanti:"Kablolu/Dongle",batarya:"AA Pil",pollingWired:"125 Hz",pollingDongle:"125 Hz"},
+  {id:158,kategori:"gamepad",isim:"8BitDo Ultimate 2C",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:218,baglanti:"Kablolu/Dongle/BT",batarya:"480 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:159,kategori:"gamepad",isim:"8BitDo Ultimate C",stickTech:"ALPS Potentiometer",triggerTech:"Standard",butonTech:"Membrane",agirlik:200,baglanti:"Kablolu/Dongle/BT",batarya:"480 mAh",pollingWired:"250 Hz",pollingDongle:"1000 Hz"},
+  {id:160,kategori:"gamepad",isim:"8BitDo Pro 3",stickTech:"TMR",triggerTech:"Hall Effect",butonTech:"Swappable Magnetic",agirlik:242,baglanti:"Kablolu/Dongle/BT",batarya:"1000 mAh",pollingWired:"250 Hz",pollingDongle:"250 Hz"},
+  {id:161,kategori:"gamepad",isim:"8BitDo Pro 2",stickTech:"Hall Effect",triggerTech:"Standard",butonTech:"Membrane",agirlik:228,baglanti:"Kablolu/BT",batarya:"1000 mAh",pollingWired:"200 Hz",pollingDongle:"100 Hz"},
+  {id:162,kategori:"gamepad",isim:"8BitDo Ultimate 2",stickTech:"TMR",triggerTech:"Hall Effect",butonTech:"Tactile Rubber Dome",agirlik:246,baglanti:"Kablolu/Dongle/BT",batarya:"1000 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:163,kategori:"gamepad",isim:"Flydigi Vader 5 Pro",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Mechanical",agirlik:289,baglanti:"Kablolu/Dongle/BT",batarya:"1000 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:164,kategori:"gamepad",isim:"Flydigi Vader 4 Pro",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Mechanical",agirlik:270,baglanti:"Kablolu/Dongle/BT",batarya:"800 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:165,kategori:"gamepad",isim:"Flydigi Vader 3 Pro",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Mechanical",agirlik:259,baglanti:"Kablolu/Dongle/BT",batarya:"800 mAh",pollingWired:"500 Hz",pollingDongle:"500 Hz"},
+  {id:166,kategori:"gamepad",isim:"Flydigi Apex 5",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Mechanical",agirlik:345,baglanti:"Kablolu/Dongle/BT",batarya:"1500 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:167,kategori:"gamepad",isim:"Flydigi Apex 4",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Mechanical",agirlik:315,baglanti:"Kablolu/Dongle/BT",batarya:"1500 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:168,kategori:"gamepad",isim:"Flydigi Direwolf 4",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:233,baglanti:"Kablolu/Dongle/BT",batarya:"800 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  {id:169,kategori:"gamepad",isim:"Flydigi Direwolf 3",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:214,baglanti:"Kablolu/Dongle/BT",batarya:"800 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
 ];
 
 /* ══════════════════════════════
@@ -1082,6 +1152,10 @@ function previewSatirlar(u){
     ana:[["Soket",u.soket??"-"],["Chipset",u.chipset??"-"],["Form",u.form_faktoru??"-"],["Bellek",u.bellek_tipi??"-"]],
     ssd:[["Kapasite",u.kapasite??"-"],["Arayüz",u.arayuz??"-"],["Okuma",(u.okuma??"-")+" MB/s"],["Yazma",(u.yazma??"-")+" MB/s"]],
     ram:[["Kapasite",u.kapasite??"-"],["Tip",u.tip??"-"],["Hız",(u.hiz??"-")+" MHz"],["CL",u.gecikme??"-"]],
+    gamepad:[["Stick",u.stickTech??"-"],["Trigger",u.triggerTech??"-"],["Buton",u.butonTech??"-"],["Bağlantı",u.baglanti??"-"],["Ağırlık",(u.agirlik??"-")+" g"]],
+    monitor:[["Panel",u.panel??"-"],["Çözünürlük",u.cozunurluk??"-"],["Yenileme",(u.yenilemeHizi??"-")+" Hz"],["Yanıt",(u.yanitSuresi??"-")+" ms"]],
+    kulaklik:[["Tip",u.tip??"-"],["Bağlantı",u.baglanti??"-"],["ANC",u.aktifGurultugiderme??"-"],["Batarya",(u.batarya??"-")+" saat"]],
+    mouse:[["DPI",u.dpi??"-"],["Sensör",u.sensor??"-"],["Bağlantı",u.baglanti??"-"],["Ağırlık",(u.agirlik??"-")+" g"]],
   };
   return (maps[u.kategori]||[]).map(([k,v])=>`
     <div class="card-spec-row"><span>${k}</span><span>${v??"-"}</span></div>
@@ -1223,7 +1297,7 @@ function karsilastir(){
   tablo+=`</tr></thead><tbody>`;
 
   // Az olması daha iyi olan alanlar (ters mantık)
-  const tersMantik=new Set(["islemSureci","tdp","psu"]);
+  const tersMantik=new Set(["islemSureci","tdp","psu","agirlik"]);
   // Renklendirme hiç yapılmayacak alanlar
   const renksizAlanlar=new Set(["gpuAdi","cikis"]);
   // Veri yolu sıralaması (büyük = iyi)
