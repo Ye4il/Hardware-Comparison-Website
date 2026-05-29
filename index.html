@@ -44,6 +44,21 @@ nav{
 .nav-search input::placeholder{color:#555;}
 .nav-search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#555;pointer-events:none;}
 
+/* ── NAV GERİ/İLERİ/YENİLE ── */
+.nav-browser-btns{display:flex;gap:2px;flex-shrink:0;}
+.nav-browser-btn{
+  width:32px;height:32px;border-radius:8px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  color:#666;font-size:15px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .18s;
+  line-height:1;
+}
+.nav-browser-btn:hover{background:rgba(0,255,255,0.1);color:#ccc;border-color:rgba(0,255,255,0.25);}
+.nav-browser-btn:active{transform:scale(.9);}
+.nav-browser-btn:disabled{opacity:.28;cursor:default;pointer-events:none;}
+
 /* ── NAV LİNKLER ── */
 .nav-links{display:flex;gap:4px;margin-left:auto;flex-shrink:0;}
 .nav-link{
@@ -475,6 +490,17 @@ footer .copy{color:#333;}
 
 <!-- NAV -->
 <nav>
+  <div class="nav-browser-btns">
+    <button class="nav-browser-btn" id="btnBack" onclick="_gidSpa(_spaIdx-1)" title="Geri" disabled>
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="nav-browser-btn" id="btnForward" onclick="_gidSpa(_spaIdx+1)" title="İleri" disabled>
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <button class="nav-browser-btn" id="btnReload" onclick="location.reload()" title="Yenile">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+    </button>
+  </div>
   <span class="nav-logo" onclick="goHome()" style="cursor:pointer;">⚡ Donanımları Karşılaştır</span>
   <div class="nav-search">
     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -1022,8 +1048,8 @@ const katAlanlar={
     etiketler:{soket:"Soket",chipset:"Chipset",form_faktoru:"Form Faktörü",bellek_tipi:"Bellek Tipi",bellek_yuvasi:"Bellek Yuvası",max_bellek:"Maks. Bellek",pcie_surumu:"PCIe Lanes (CPU)",m2_yuvasi:"M.2 Yuvaları",cikis:"Çıkış Tarihi",vrm_vcore:"VRM VCore (A)",phase_config:"VRM Phase Config",pcb_layers:"PCB Katman",mos_heatsink:"VRM Heatsink",audio_codec:"Ses Kodek",ethernet:"Ethernet",wireless:"Wi-Fi / BT",bios_flash:"BIOS Flashback",clear_cmos:"Clear CMOS",debug_features:"Debug Ekran",argb_5v:"ARGB 5V Header",usb2_header:"USB 2.0 Header",usb3_header:"USB 3.0 Header",usbc_header:"USB-C Header (Internal)",rear_usba:"Arka USB-A",rear_usbc_10g:"Arka USB-C 10G",rear_usbc_20g:"Arka USB-C 20G",sata:"SATA Port"}
   },
   ssd:{
-    alanlar:["kapasite","arayuz","form_faktoru","okuma","yazma","nand_tipi","nand_uretici","cikis"],
-    etiketler:{kapasite:"Kapasite",arayuz:"Arayüz",form_faktoru:"Form Faktörü",okuma:"Seq. Okuma (MB/s)",yazma:"Seq. Yazma (MB/s)",nand_tipi:"NAND Tipi",nand_uretici:"NAND Üreticisi",cikis:"Çıkış Tarihi"}
+    alanlar:["arabirim","kapasite","kontrolcu","kontrolcu_oz","dram","hmb","bellek_uretici","nand_tipi","nand","katman","seq_okuma","seq_yazma","sinif","notlar"],
+    etiketler:{arabirim:"Arabirim",kapasite:"Kapasite",kontrolcu:"Kontrolcü",kontrolcu_oz:"Kontrolcü Özellikleri",dram:"DRAM",hmb:"HMB",bellek_uretici:"Bellek Üreticisi",nand_tipi:"NAND Tipi",nand:"NAND",katman:"Katman Sayısı",seq_okuma:"Sıralı Okuma (MB/s)",seq_yazma:"Sıralı Yazma (MB/s)",sinif:"Sınıf",notlar:"Notlar"}
   },
   ram:{
     alanlar:["kapasite","tip","hiz","gecikme","voltaj","cikis"],
@@ -1692,6 +1718,175 @@ const urunler=[
   {id:167,kategori:"gamepad",isim:"Flydigi Apex 4",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Mechanical",agirlik:315,baglanti:"Kablolu/Dongle/BT",batarya:"1500 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
   {id:168,kategori:"gamepad",isim:"Flydigi Direwolf 4",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:233,baglanti:"Kablolu/Dongle/BT",batarya:"800 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
   {id:169,kategori:"gamepad",isim:"Flydigi Direwolf 3",stickTech:"Hall Effect",triggerTech:"Hall Effect",butonTech:"Membrane",agirlik:214,baglanti:"Kablolu/Dongle/BT",batarya:"800 mAh",pollingWired:"1000 Hz",pollingDongle:"1000 Hz"},
+  /* ── SSD ── */
+  {id:5000,kategori:"ssd",isim:"Acer SA100",arabirim:"SATA",kapasite:"120 GB - 960 GB",kontrolcu:"Maxio MAS0902A",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"QLC",nand:"3D",katman:"96.0",seq_okuma:"560",seq_yazma:"480",sinif:"D",notlar:"-"},
+  {id:5001,kategori:"ssd",isim:"Adata SU630",arabirim:"SATA",kapasite:"240-960 GB",kontrolcu:"Maxio MAS0902A",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"QLC",nand:"3D",katman:"32/64",seq_okuma:"520",seq_yazma:"450",sinif:"D-",notlar:"Sorun çıkarma ihtimali yüksek, kalitesiz bir model."},
+  {id:5002,kategori:"ssd",isim:"Adata SU650",arabirim:"SATA",kapasite:"240-960 GB",kontrolcu:"SMI SM2258XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"520",seq_yazma:"450",sinif:"D-",notlar:"Sorun çıkarma ihtimali yüksek, kalitesiz bir model."},
+  {id:5003,kategori:"ssd",isim:"Adata SU750",arabirim:"SATA",kapasite:"256 GB-1 TB",kontrolcu:"Realtek RTS5733DMQ",kontrolcu_oz:"?",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"550",seq_yazma:"520",sinif:"C",notlar:"-"},
+  {id:5004,kategori:"ssd",isim:"Adata SU800",arabirim:"SATA",kapasite:"128 GB-2TB",kontrolcu:"SMI SM2258",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"560",seq_yazma:"520",sinif:"B",notlar:"-"},
+  {id:5005,kategori:"ssd",isim:"Adata SWORDFISH",arabirim:"M.2 NVMe",kapasite:"250 GB - 2 TB",kontrolcu:"Realtek RTS5763DL",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Evet",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"1800",seq_yazma:"1200",sinif:"C",notlar:"-"},
+  {id:5006,kategori:"ssd",isim:"Adata SX6000",arabirim:"M.2 NVMe",kapasite:"128 GB - 2 TB",kontrolcu:"Realtek RTS5760",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 8-CE/ch",dram:"Evet",hmb:"Evet",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"32.0",seq_okuma:"1000",seq_yazma:"800",sinif:"D",notlar:"Garbage"},
+  {id:5007,kategori:"ssd",isim:"Adata SX6000 LITE",arabirim:"M.2 NVMe",kapasite:"128-256 GB",kontrolcu:"Realtek RTS5763DL",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Evet",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"1800",seq_yazma:"1200",sinif:"C-",notlar:"-"},
+  {id:5008,kategori:"ssd",isim:"Adata SX6000 PRO",arabirim:"M.2 NVMe",kapasite:"256 GB - 2 TB",kontrolcu:"Realtek RTS5763DL",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Evet",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"2100",seq_yazma:"1500",sinif:"C+",notlar:"-"},
+  {id:5009,kategori:"ssd",isim:"Adata SX8100",arabirim:"M.2 NVMe",kapasite:"512 GB - 2 TB",kontrolcu:"Realtek RTS5762",kontrolcu_oz:"Çift Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"3200",seq_yazma:"1700",sinif:"B",notlar:"-"},
+  {id:5010,kategori:"ssd",isim:"Adata SX8200 PRO",arabirim:"M.2 NVMe",kapasite:"256 GB - 2 TB",kontrolcu:"SMI SM2262G",kontrolcu_oz:"?",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"3500",seq_yazma:"3000",sinif:"B+",notlar:"SMI SM2262EN kontrolcü SM2262G ile değiştirilmiş :/"},
+  {id:5011,kategori:"ssd",isim:"Adata XPG Spectrix S40G",arabirim:"M.2 NVMe",kapasite:"256 GB - 4 TB",kontrolcu:"Realtek RTS5762",kontrolcu_oz:"Çift Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64/96",seq_okuma:"3500",seq_yazma:"3000",sinif:"B+",notlar:"-"},
+  {id:5012,kategori:"ssd",isim:"Adata XPG S11 PRO",arabirim:"M.2 NVMe",kapasite:"512 GB - 2 TB",kontrolcu:"SMI SM2262EN",kontrolcu_oz:"Çift Çekirdek, 8 Kanal, 4-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"3500",seq_yazma:"3000",sinif:"A-",notlar:"-"},
+  {id:5013,kategori:"ssd",isim:"Adata XPG S70",arabirim:"M.2 NVMe",kapasite:"1 TB - 2 TB",kontrolcu:"Innogrit Rainier",kontrolcu_oz:"?",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"7400",seq_yazma:"6400",sinif:"S",notlar:"-"},
+  {id:5014,kategori:"ssd",isim:"Adata XPG S50 LITE",arabirim:"M.2 NVMe",kapasite:"1 TB - 2 TB",kontrolcu:"SMI SM2267EN",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"3900",seq_yazma:"3200",sinif:"S",notlar:"-"},
+  {id:5015,kategori:"ssd",isim:"Addlink S20",arabirim:"SATA",kapasite:"120 GB - 1 TB",kontrolcu:"Phison S10",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 4-CE/ch",dram:"Evet",hmb:"?",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"560",seq_yazma:"500",sinif:"B-",notlar:"-"},
+  {id:5016,kategori:"ssd",isim:"Addlink S68",arabirim:"M.2 NVMe",kapasite:"256 GB - 1 TB",kontrolcu:"Phison E13T",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Evet",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"2500",seq_yazma:"2100",sinif:"C",notlar:"-"},
+  {id:5017,kategori:"ssd",isim:"Addlink S70",arabirim:"M.2 NVMe",kapasite:"256 GB - 2 TB",kontrolcu:"Phison E12",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 32-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"3500",seq_yazma:"3000",sinif:"B",notlar:"-"},
+  {id:5018,kategori:"ssd",isim:"Addlink S72",arabirim:"M.2 NVMe",kapasite:"1 TB - 4 TB",kontrolcu:"Phison E12",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 32-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"QLC",nand:"3D",katman:"96.0",seq_okuma:"3400",seq_yazma:"3000",sinif:"C",notlar:"-"},
+  {id:5019,kategori:"ssd",isim:"Addlink S92",arabirim:"M.2 NVMe",kapasite:"1 TB - 4 TB",kontrolcu:"Phison E16",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"QLC",nand:"3D",katman:"96.0",seq_okuma:"4900",seq_yazma:"3600",sinif:"A+",notlar:"-"},
+  {id:5020,kategori:"ssd",isim:"Addlink S95",arabirim:"M.2 NVMe",kapasite:"1 TB - 2 TB",kontrolcu:"Phison E18",kontrolcu_oz:"5 Çekirdek (R5+CoX), 8 Kanal",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"7100",seq_yazma:"6800",sinif:"S",notlar:"-"},
+  {id:5021,kategori:"ssd",isim:"Alpin SATA",arabirim:"SATA",kapasite:"120 GB - 2 TB",kontrolcu:"SMI SM2258XT (?)",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"?",nand_tipi:"?",nand:"?",katman:"?",seq_okuma:"550",seq_yazma:"500",sinif:"D",notlar:"Kendisi hakkında pek bir bilgi yok. Türk malı SSD."},
+  {id:5022,kategori:"ssd",isim:"Apacer AS340",arabirim:"SATA",kapasite:"120 GB - 960GB",kontrolcu:"Phison S11",kontrolcu_oz:"Tek Çekirdek, 2 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"550",seq_yazma:"520",sinif:"B",notlar:"-"},
+  {id:5023,kategori:"ssd",isim:"Apacer AS350",arabirim:"SATA",kapasite:"128 GB - 1 TB",kontrolcu:"Phison S11",kontrolcu_oz:"Tek Çekirdek, 2 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"560",seq_yazma:"540",sinif:"B",notlar:"-"},
+  {id:5024,kategori:"ssd",isim:"Apacer AS2280P4",arabirim:"M.2 NVMe",kapasite:"240 GB - 1 TB",kontrolcu:"Phison E8",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"3000",seq_yazma:"2000",sinif:"C",notlar:"-"},
+  {id:5025,kategori:"ssd",isim:"Biostar S120",arabirim:"SATA",kapasite:"120 GB - 1 TB",kontrolcu:"Maxio MAS0902A",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC-QLC (?)",nand:"3D",katman:"?",seq_okuma:"550",seq_yazma:"525",sinif:"D-",notlar:"Kötü kontrolcü"},
+  {id:5026,kategori:"ssd",isim:"Codegen CDG",arabirim:"SATA",kapasite:"128 GB - 1TB",kontrolcu:"?",kontrolcu_oz:"?",dram:"?",hmb:"?",bellek_uretici:"?",nand_tipi:"?",nand:"?",katman:"?",seq_okuma:"-",seq_yazma:"-",sinif:"D-",notlar:"Kalitesiz."},
+  {id:5027,kategori:"ssd",isim:"Colorful SL500",arabirim:"-",kapasite:"-",kontrolcu:"SMI SM2258XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"?",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"500",seq_yazma:"400",sinif:"D-",notlar:"-"},
+  {id:5028,kategori:"ssd",isim:"Corsair MP400",arabirim:"M.2 NVMe",kapasite:"1 TB - 8 TB",kontrolcu:"Phison E12S",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 4-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Intel",nand_tipi:"QLC",nand:"3D",katman:"96.0",seq_okuma:"3400",seq_yazma:"3000",sinif:"C-",notlar:"Depolama için uygun, işletim sistemi kurmak  için tercih etmeyin."},
+  {id:5029,kategori:"ssd",isim:"Corsair MP300",arabirim:"M.2 NVMe",kapasite:"120 GB - 960 GB",kontrolcu:"Phison E8",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"1600",seq_yazma:"1000",sinif:"C-",notlar:"-"},
+  {id:5030,kategori:"ssd",isim:"Corsair MP510",arabirim:"M.2 NVMe",kapasite:"240GB-4TB",kontrolcu:"Phison E12",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 32-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"3500",seq_yazma:"3000",sinif:"C-",notlar:"Yapılan bir değişiklikle oldukça zayıflatılmış bir model."},
+  {id:5031,kategori:"ssd",isim:"Corsair MP600",arabirim:"M.2 NVMe",kapasite:"500 GB - 2 TB",kontrolcu:"Phison E16",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"5000",seq_yazma:"4250",sinif:"S",notlar:"-"},
+  {id:5032,kategori:"ssd",isim:"Corsair MP600 PRO",arabirim:"M.2 NVMe",kapasite:"500 GB-2 TB",kontrolcu:"Phison E18",kontrolcu_oz:"5 Çekirdek (R5+CoX), 8 Kanal",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"7000",seq_yazma:"6550",sinif:"-",notlar:"-"},
+  {id:5033,kategori:"ssd",isim:"Crucial MX500",arabirim:"M.2 SATA, SATA",kapasite:"250 GB - 2 TB",kontrolcu:"SMI SM2258",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64/96",seq_okuma:"550",seq_yazma:"510",sinif:"A",notlar:"BX500 ile karıştırılan model."},
+  {id:5034,kategori:"ssd",isim:"Crucial BX500",arabirim:"SATA",kapasite:"120 GB - 2 TB",kontrolcu:"SMI SM2258XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"-",seq_yazma:"-",sinif:"D-",notlar:"Isınma problemi + Kötü kontrolcü"},
+  {id:5035,kategori:"ssd",isim:"Crucial P1",arabirim:"M.2 NVMe",kapasite:"500GB-2TB",kontrolcu:"SMI SM2263",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 4-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"QLC",nand:"3D",katman:"64.0",seq_okuma:"2000",seq_yazma:"1700",sinif:"C-",notlar:"Depolama amacı için kullanılabilir."},
+  {id:5036,kategori:"ssd",isim:"Crucial P2",arabirim:"M.2 NVMe",kapasite:"250GB-2TB",kontrolcu:"Phison E13T",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Evet",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"2400",seq_yazma:"1900",sinif:"C",notlar:"-"},
+  {id:5037,kategori:"ssd",isim:"Crucial P5",arabirim:"M.2 NVMe",kapasite:"250 GB - 2 TB",kontrolcu:"Micron DM01B2",kontrolcu_oz:"Çift Çekirdek (R5+M3), 8 Kanal",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"3400",seq_yazma:"3000",sinif:"A-",notlar:"Kaliteli ama pek tercih edilmeyen bir model."},
+  {id:5038,kategori:"ssd",isim:"Crucial P5 Plus",arabirim:"M.2 NVMe",kapasite:"500 GB - 2 TB",kontrolcu:"Crucial in-house (?)",kontrolcu_oz:"(?)",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"176.0",seq_okuma:"6600",seq_yazma:"5000",sinif:"A+",notlar:"-"},
+  {id:5039,kategori:"ssd",isim:"Ezcool S200-S400",arabirim:"SATA",kapasite:"60 GB - 480 GB",kontrolcu:"SMI SM2256G",kontrolcu_oz:"?",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"?",seq_okuma:"-",seq_yazma:"-",sinif:"D-",notlar:"Garbage"},
+  {id:5040,kategori:"ssd",isim:"GeIL Zenith R3",arabirim:"SATA",kapasite:"128 GB - 1 TB",kontrolcu:"SMI SM2256K",kontrolcu_oz:"?",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"SK Hynix",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"550",seq_yazma:"490",sinif:"D-",notlar:"-"},
+  {id:5041,kategori:"ssd",isim:"Gigabyte GSTFS SATA",arabirim:"SATA",kapasite:"120 GB - 1 TB",kontrolcu:"Phison S11",kontrolcu_oz:"Tek Çekirdek, 2 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"550",seq_yazma:"500",sinif:"B-",notlar:"-"},
+  {id:5042,kategori:"ssd",isim:"Gigabyte GSM2NE3",arabirim:"NVMe",kapasite:"128 GB - 2 TB",kontrolcu:"Phison E8",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Evet",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"2500",seq_yazma:"2100",sinif:"C",notlar:"-"},
+  {id:5043,kategori:"ssd",isim:"Gigabyte Aorus",arabirim:"M.2 NVMe",kapasite:"1 TB",kontrolcu:"Phison E16",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"5000",seq_yazma:"4400",sinif:"S",notlar:"-"},
+  {id:5044,kategori:"ssd",isim:"Goodram CL100",arabirim:"SATA",kapasite:"120 GB - 480  GB",kontrolcu:"Marvell NV881120",kontrolcu_oz:"Çift Çekirdek, 2 Kanal, 4-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"?",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"500",seq_yazma:"480",sinif:"C",notlar:"-"},
+  {id:5045,kategori:"ssd",isim:"Hikvision E100",arabirim:"SATA",kapasite:"128 GB - 1 TB",kontrolcu:"SMI SM2258XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"32.0",seq_okuma:"560",seq_yazma:"500",sinif:"D-",notlar:"Kötü kontrolcü, tek NAND yongası, ısınma"},
+  {id:5046,kategori:"ssd",isim:"Hikvision E100N",arabirim:"M.2 SATA",kapasite:"128 GB - 1 TB",kontrolcu:"SMI SM2258XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"?",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"560",seq_yazma:"500",sinif:"D",notlar:"-"},
+  {id:5047,kategori:"ssd",isim:"Hikvision C100",arabirim:"SATA",kapasite:"120 GB - 1 TB",kontrolcu:"Maxio MAS0901/SMI SM2258XT",kontrolcu_oz:"?",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"?",nand_tipi:"TLC",nand:"3D",katman:"?",seq_okuma:"550",seq_yazma:"470",sinif:"D-",notlar:"Kötü kontrolcü"},
+  {id:5048,kategori:"ssd",isim:"Hi-Level Ultra",arabirim:"SATA",kapasite:"120 GB-960 GB",kontrolcu:"Phison S11",kontrolcu_oz:"Tek Çekirdek, 2 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"No-Name",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"550",seq_yazma:"530",sinif:"D-",notlar:"Hakkında pek bilgi bulamadığım ama sorunlu bir model."},
+  {id:5049,kategori:"ssd",isim:"Hi-Level HLV",arabirim:"M.2 NVMe",kapasite:"256 GB - 1 TB",kontrolcu:"Phison E13T",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"3300",seq_yazma:"3100",sinif:"C",notlar:"-"},
+  {id:5050,kategori:"ssd",isim:"HP EX900",arabirim:"M.2 NVMe",kapasite:"120 GB - 1 TB",kontrolcu:"SMI SM2263XT",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 4-CE/ch",dram:"Bulunmuyor",hmb:"Evet",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"2100",seq_yazma:"1800",sinif:"C-",notlar:"-"},
+  {id:5051,kategori:"ssd",isim:"HP EX950",arabirim:"M.2 NVMe",kapasite:"512 GB - 2 TB",kontrolcu:"SMI SM2262EN",kontrolcu_oz:"Çift Çekirdek, 8 Kanal, 4-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"3500",seq_yazma:"2900",sinif:"A-",notlar:"-"},
+  {id:5052,kategori:"ssd",isim:"HP S600",arabirim:"SATA",kapasite:"120-240 GB",kontrolcu:"Marvell 88NV1120",kontrolcu_oz:"Çift Çekirdek, 2 Kanal, 4-CE/ch",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"520",seq_yazma:"500",sinif:"C-",notlar:"Garbage"},
+  {id:5053,kategori:"ssd",isim:"HP S700",arabirim:"SATA",kapasite:"120-500 GB",kontrolcu:"SMI SM2258XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"32/64",seq_okuma:"560",seq_yazma:"515",sinif:"C-",notlar:"Kötü kontrolcü"},
+  {id:5054,kategori:"ssd",isim:"HP S750",arabirim:"SATA",kapasite:"256 GB- 1 TB",kontrolcu:"SMI SM2259XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Intel",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"560",seq_yazma:"520",sinif:"C",notlar:"Kötü kontrolcü"},
+  {id:5055,kategori:"ssd",isim:"HP S700 Pro",arabirim:"SATA",kapasite:"128 GB- 1 TB",kontrolcu:"SMI SM2258",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"32/64",seq_okuma:"570",seq_yazma:"525",sinif:"B+",notlar:"-"},
+  {id:5056,kategori:"ssd",isim:"Intel 660p",arabirim:"M.2 NVMe",kapasite:"512 GB - 2 TB",kontrolcu:"SMI SM2263",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 4-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Intel",nand_tipi:"QLC",nand:"3D",katman:"64.0",seq_okuma:"1800",seq_yazma:"1800",sinif:"C-",notlar:"İşletim sistemi kurmak için pek uygun bir model değil."},
+  {id:5057,kategori:"ssd",isim:"Intel 760p",arabirim:"M.2 NVMe",kapasite:"128 GB - 2 TB",kontrolcu:"SMI SM2262",kontrolcu_oz:"Çift Çekirdek, 8 Kanal, 4-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Intel",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"3200",seq_yazma:"1600",sinif:"C+",notlar:"-"},
+  {id:5058,kategori:"ssd",isim:"Intenso HIGH",arabirim:"SATA",kapasite:"120 GB- 960 GB",kontrolcu:"SMI SM2258XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"?",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"520",seq_yazma:"480",sinif:"C",notlar:"Eski Kontrolcü"},
+  {id:5059,kategori:"ssd",isim:"Intenso TOP",arabirim:"SATA",kapasite:"120 GB - 960 GB",kontrolcu:"SMI SM2258XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"?",nand_tipi:"MLC",nand:"?",katman:"?",seq_okuma:"540",seq_yazma:"470",sinif:"B-",notlar:"Eski Kontrolcü"},
+  {id:5060,kategori:"ssd",isim:"James Donkey JD",arabirim:"SATA",kapasite:"120 GB-960 GB",kontrolcu:"SMI SM2258XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"Micron/Intel",nand_tipi:"TLC",nand:"3D",katman:"32/64",seq_okuma:"560",seq_yazma:"500",sinif:"D-",notlar:"Verileriniz eşeğe emanet edilecek kadar değersiz değildir."},
+  {id:5061,kategori:"ssd",isim:"James Donkey JD",arabirim:"M.2 NVMe",kapasite:"256 GB - 1 TB",kontrolcu:"D",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 4-CE/ch",dram:"Bulunmuyor",hmb:"Evet",bellek_uretici:"Intel",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"2100",seq_yazma:"1700",sinif:"D-",notlar:"Eh."},
+  {id:5062,kategori:"ssd",isim:"James Donkey JD 1000PRO",arabirim:"M.2 NVMe",kapasite:"256-1 TB",kontrolcu:"SMI SM2262EN",kontrolcu_oz:"Çift Çekirdek, 8 Kanal, 4-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Intel",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"3400",seq_yazma:"3000",sinif:"A-",notlar:"JD'nin kaliteli tek ürünü."},
+  {id:5063,kategori:"ssd",isim:"Kingspec P3",arabirim:"SATA",kapasite:"128 GB 2 TB",kontrolcu:"Chipstar CS1802A",kontrolcu_oz:"?",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"64-72",seq_okuma:"580",seq_yazma:"570",sinif:"C-",notlar:"-"},
+  {id:5064,kategori:"ssd",isim:"Kingspec NE Series",arabirim:"M.2 NVMe",kapasite:"128 GB - 1 TB",kontrolcu:"SMI SM2263XT",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 4-CE/ch",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"2400",seq_yazma:"1900",sinif:"C",notlar:"-"},
+  {id:5065,kategori:"ssd",isim:"Kingston A400",arabirim:"SATA, M.2 SATA",kapasite:"120 GB - 960 GB",kontrolcu:"Phison S11",kontrolcu_oz:"Tek Çekirdek, 2 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"Kingston",nand_tipi:"TLC",nand:"2D",katman:"Ğ",seq_okuma:"500",seq_yazma:"450",sinif:"C-",notlar:"2D."},
+  {id:5066,kategori:"ssd",isim:"Kingston A2000",arabirim:"M.2 NVMe",kapasite:"250 GB - 1 TB",kontrolcu:"SMI SM2263EN",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 4-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"2200",seq_yazma:"2000",sinif:"B-",notlar:"-"},
+  {id:5067,kategori:"ssd",isim:"Kingston HyperX Fury 3D",arabirim:"SATA",kapasite:"120 GB - 480 GB",kontrolcu:"SMI SM2258XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"?",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"500",seq_yazma:"500",sinif:"B-",notlar:"-"},
+  {id:5068,kategori:"ssd",isim:"Kingston HyperX Fury RGB",arabirim:"SATA",kapasite:"240 GB - 960 GB",kontrolcu:"Marvell 88SS1074",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 8-CE/ch",dram:"Evet",hmb:"?",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"520",seq_yazma:"500",sinif:"C-",notlar:"Isınma problemi"},
+  {id:5069,kategori:"ssd",isim:"Kingston KC600",arabirim:"SATA",kapasite:"256 GB - 2 TB",kontrolcu:"SMI SM2259",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Evet",hmb:"?",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"550",seq_yazma:"520",sinif:"A",notlar:"= 860 EVO. Kaliteli bir model."},
+  {id:5070,kategori:"ssd",isim:"Kingston KC2000",arabirim:"M.2 NVMe",kapasite:"250 GB - 2 TB",kontrolcu:"SMI SM2262EN",kontrolcu_oz:"Çift Çekirdek, 8 Kanal, 4-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"3200",seq_yazma:"2200",sinif:"A",notlar:"Fiyatı tuzlu olsa da kaliteli ürün."},
+  {id:5071,kategori:"ssd",isim:"Kingston KC2500",arabirim:"M.2 NVMe",kapasite:"250 GB - 2TB",kontrolcu:"SMI SM2262EN",kontrolcu_oz:"Çift Çekirdek, 8 Kanal, 4-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"3500",seq_yazma:"2900",sinif:"A",notlar:"KC2000'in biraz daha hızlı hali."},
+  {id:5072,kategori:"ssd",isim:"Kingston KC3000",arabirim:"M.2 NVMe",kapasite:"512 GB - 4 TB",kontrolcu:"Phison E18",kontrolcu_oz:"5 Çekirdek (R5+CoX), 8 Kanal",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"176.0",seq_okuma:"7000",seq_yazma:"7000",sinif:"S+",notlar:"-"},
+  {id:5073,kategori:"ssd",isim:"Kingston Fury Renegade",arabirim:"M.2 NVMe",kapasite:"512 GB - 4 TB",kontrolcu:"Phison E18",kontrolcu_oz:"5 Çekirdek (R5+CoX), 8 Kanal",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"176.0",seq_okuma:"7300",seq_yazma:"7000",sinif:"S++",notlar:"KC3000'in mükemmelleştirilmiş hali."},
+  {id:5074,kategori:"ssd",isim:"Kingston NV1",arabirim:"M.2 NVMe",kapasite:"250 GB - 2 TB",kontrolcu:"SMI SM2263XT",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 4-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"QLC",nand:"3D",katman:"96.0",seq_okuma:"2100",seq_yazma:"1700",sinif:"D",notlar:"-"},
+  {id:5075,kategori:"ssd",isim:"Kingston NV2",arabirim:"M.2 NVMe",kapasite:"250 GB - 2 TB",kontrolcu:"Phison E21",kontrolcu_oz:"?",dram:"Bulunmuyor",hmb:"Evet",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"112.0",seq_okuma:"3500",seq_yazma:"2800",sinif:"C-",notlar:"-"},
+  {id:5076,kategori:"ssd",isim:"Kingston UV500",arabirim:"SATA, M.2 SATA",kapasite:"120 GB - 480 GB",kontrolcu:"Marvell 88SS1074",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"520",seq_yazma:"500",sinif:"B+",notlar:"-"},
+  {id:5077,kategori:"ssd",isim:"Kioxia Exceria G2",arabirim:"-",kapasite:"-",kontrolcu:"-",kontrolcu_oz:"Phison E12C",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"2100",seq_yazma:"1700",sinif:"B",notlar:"-"},
+  {id:5078,kategori:"ssd",isim:"Kioxia Exceria SATA",arabirim:"SATA",kapasite:"240 GB - 960 GB",kontrolcu:"Phison S11T",kontrolcu_oz:"Tek Çekirdek, 2 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"555",seq_yazma:"540",sinif:"D-",notlar:"-"},
+  {id:5079,kategori:"ssd",isim:"Kioxia Exceria NVMe",arabirim:"M.2 NVMe",kapasite:"500 GB - 2 TB",kontrolcu:"Phison E12C",kontrolcu_oz:"4 Kanal",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"1700",seq_yazma:"1600",sinif:"B-",notlar:"-"},
+  {id:5080,kategori:"ssd",isim:"Kioxia Exceria Plus",arabirim:"M.2 NVMe",kapasite:"500 GB - 2 TB",kontrolcu:"Phison E12S",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 4-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"3400",seq_yazma:"3200",sinif:"B",notlar:"-"},
+  {id:5081,kategori:"ssd",isim:"Kioxia Exceria PRO",arabirim:"M.2 NVMe",kapasite:"1 TB - 2 TB",kontrolcu:"Phison E18",kontrolcu_oz:"5 Çekirdek (R5+CoX), 8 Kanal",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"112.0",seq_okuma:"7300",seq_yazma:"6400",sinif:"-",notlar:"-"},
+  {id:5082,kategori:"ssd",isim:"Leven JS300",arabirim:"SATA",kapasite:"120-240 GB (ülkemizde)",kontrolcu:"SMI SM2259XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"500",seq_yazma:"450",sinif:"D+",notlar:"-"},
+  {id:5083,kategori:"ssd",isim:"Leven JS600",arabirim:"SATA",kapasite:"128-512 GB",kontrolcu:"SMI SM2259H",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"500",seq_yazma:"450",sinif:"B+",notlar:"-"},
+  {id:5084,kategori:"ssd",isim:"Leven JPR600",arabirim:"M.2 NVMe",kapasite:"-",kontrolcu:"-",kontrolcu_oz:"-",dram:"Bulunmuyor",hmb:"-",bellek_uretici:"?",nand_tipi:"QLC",nand:"3D",katman:"6.0",seq_okuma:"3500",seq_yazma:"3000",sinif:"?",notlar:"-"},
+  {id:5085,kategori:"ssd",isim:"Lexar NM610",arabirim:"M.2 NVMe",kapasite:"250 GB - 1 TB",kontrolcu:"SMI SM2263XT",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 4-CE/ch",dram:"Bulunmuyor",hmb:"Evet",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"2100",seq_yazma:"1600",sinif:"C-",notlar:"-"},
+  {id:5086,kategori:"ssd",isim:"Lexar NM700",arabirim:"M.2 NVMe",kapasite:"256 GB - 1 TB",kontrolcu:"Marvell 88SS1092",kontrolcu_oz:"Üç Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"3500",seq_yazma:"2000",sinif:"B",notlar:"-"},
+  {id:5087,kategori:"ssd",isim:"Lexar NS100",arabirim:"SATA",kapasite:"240 GB - 480 GB",kontrolcu:"Marvell 88NV1120",kontrolcu_oz:"Çift Çekirdek, 2 Kanal, 4-CE/ch",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"550",seq_yazma:"520",sinif:"C-",notlar:"-"},
+  {id:5088,kategori:"ssd",isim:"Micron 1300.0",arabirim:"SATA",kapasite:"256 GB - 2 TB",kontrolcu:"Marvell 88SS1074",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"530",seq_yazma:"520",sinif:"A-",notlar:"-"},
+  {id:5089,kategori:"ssd",isim:"MLD M300",arabirim:"M.2 NVMe",kapasite:"250 GB - 1 TB",kontrolcu:"Phison E13T",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"YMTC (?)",nand_tipi:"TLC",nand:"3D",katman:"64-96",seq_okuma:"3300",seq_yazma:"3100",sinif:"D-",notlar:"Kesinlikle önermediğim bir model."},
+  {id:5090,kategori:"ssd",isim:"MSI Spatium M390",arabirim:"M.2 NVMe",kapasite:"500 GB - 1 TB",kontrolcu:"Phison E15",kontrolcu_oz:"4 Çekirdek 8 Kanal 8-CE/Ch",dram:"Bulunmuyor",hmb:"Evet",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"176.0",seq_okuma:"3300",seq_yazma:"3000",sinif:"A-",notlar:"-"},
+  {id:5091,kategori:"ssd",isim:"MSI Spatium M450",arabirim:"M.2 NVMe",kapasite:"500 GB - 1 TB",kontrolcu:"Phison E19",kontrolcu_oz:"4  Kanal 16-CE/Ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"176.0",seq_okuma:"3600",seq_yazma:"3000",sinif:"A",notlar:"-"},
+  {id:5092,kategori:"ssd",isim:"MSI Spatium M470",arabirim:"M.2 NVMe",kapasite:"1 TB - 2 TB",kontrolcu:"Phison E16",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"BiCS4",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"5000",seq_yazma:"4400",sinif:"A+",notlar:"-"},
+  {id:5093,kategori:"ssd",isim:"MSI Spatium M480",arabirim:"M.2 NVMe",kapasite:"500 GB - 2 TB",kontrolcu:"Phison E18",kontrolcu_oz:"5 Çekirdek (R5+CoX), 8 Kanal",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"7000",seq_yazma:"6800",sinif:"S",notlar:"-"},
+  {id:5094,kategori:"ssd",isim:"NeoForza ZION NFS01",arabirim:"SATA",kapasite:"128 GB - 960 GB",kontrolcu:"SMI SM2258XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"?",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"520",seq_yazma:"430",sinif:"D",notlar:"Kötü kontrolcü."},
+  {id:5095,kategori:"ssd",isim:"NeoForza NFP03",arabirim:"M.2 NVMe",kapasite:"128 GB - 1 TB",kontrolcu:"SMI SM2263XT",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"?",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"1500",seq_yazma:"1200",sinif:"C-",notlar:"-"},
+  {id:5096,kategori:"ssd",isim:"Micron 2200.0",arabirim:"M.2 NVMe",kapasite:"256 GB - 1 TB",kontrolcu:"Micron in-house",kontrolcu_oz:"?",dram:"Evet",hmb:"?",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"3000",seq_yazma:"1600",sinif:"B",notlar:"-"},
+  {id:5097,kategori:"ssd",isim:"MLD M300",arabirim:"-",kapasite:"250 GB - 1 TB",kontrolcu:"Phison E13T",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Yok",bellek_uretici:"Intel-YMTC (?)",nand_tipi:"TLC-QLC (?)",nand:"3D",katman:"64-96",seq_okuma:"3300",seq_yazma:"3100",sinif:"C-",notlar:"-"},
+  {id:5098,kategori:"ssd",isim:"Mushkin Pilot-E",arabirim:"M.2 NVMe",kapasite:"500 GB - 2 TB",kontrolcu:"SMI SM2262G",kontrolcu_oz:"?",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"3500",seq_yazma:"3100",sinif:"B+",notlar:"-"},
+  {id:5099,kategori:"ssd",isim:"Mushkin Source",arabirim:"SATA",kapasite:"120 GB - 1 TB",kontrolcu:"SMI SM2258XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"560",seq_yazma:"520",sinif:"C-",notlar:"-"},
+  {id:5100,kategori:"ssd",isim:"Mushkin Source Deluxe",arabirim:"SATA",kapasite:"120 GB - 2 TB",kontrolcu:"SMI SM2258",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"560",seq_yazma:"520",sinif:"B+",notlar:"-"},
+  {id:5101,kategori:"ssd",isim:"Netac N535S",arabirim:"SATA",kapasite:"120 GB - 1 TB",kontrolcu:"SMI SM2258XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"?",nand_tipi:"TLC",nand:"3D",katman:"?",seq_okuma:"560",seq_yazma:"520",sinif:"C-",notlar:"Kötü kontrolcü. Tehlikeli model."},
+  {id:5102,kategori:"ssd",isim:"Netac N600S",arabirim:"SATA",kapasite:"128 - 2 TB",kontrolcu:"SMI SM2258XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"560",seq_yazma:"520",sinif:"C-",notlar:"-"},
+  {id:5103,kategori:"ssd",isim:"Patriot Burst",arabirim:"SATA",kapasite:"120 GB - 960 GB",kontrolcu:"Phison S11",kontrolcu_oz:"Tek Çekirdek, 2 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"560",seq_yazma:"530",sinif:"B",notlar:"-"},
+  {id:5104,kategori:"ssd",isim:"Patriot P210",arabirim:"SATA",kapasite:"128 GB - 2 TB",kontrolcu:"SMI SM2259XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Toshiba (?)",nand_tipi:"QLC",nand:"3D",katman:"64.0",seq_okuma:"520",seq_yazma:"430",sinif:"C-",notlar:"Depolama amacıyla kullanılmalı, yavaş."},
+  {id:5105,kategori:"ssd",isim:"Patriot P300",arabirim:"M.2 NVMe",kapasite:"128 GB - 2 TB",kontrolcu:"Phison E13T",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Evet",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"2100",seq_yazma:"1650",sinif:"C-",notlar:"-"},
+  {id:5106,kategori:"ssd",isim:"Patriot VPN100",arabirim:"M.2 NVMe",kapasite:"256 GB - 2 TB",kontrolcu:"Phison E12",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 32-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"3400",seq_yazma:"3000",sinif:"A-",notlar:"-"},
+  {id:5107,kategori:"ssd",isim:"Patriot VP4100",arabirim:"M.2 NVMe",kapasite:"500 GB - 2 TB",kontrolcu:"Phison E16",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"5000",seq_yazma:"4400",sinif:"S",notlar:"-"},
+  {id:5108,kategori:"ssd",isim:"Patriot VPR100",arabirim:"M.2 NVMe",kapasite:"256 GB - 2TB",kontrolcu:"Phison E12",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 32-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"3300",seq_yazma:"2900",sinif:"A-",notlar:"-"},
+  {id:5109,kategori:"ssd",isim:"Pioneer APS-SL3",arabirim:"SATA",kapasite:"120 GB - 1 TB",kontrolcu:"Phison S11",kontrolcu_oz:"Tek Çekirdek, 2 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"Toshiba",nand_tipi:"QLC",nand:"3D",katman:"64.0",seq_okuma:"550",seq_yazma:"500",sinif:"B",notlar:"-"},
+  {id:5110,kategori:"ssd",isim:"PNY CS900",arabirim:"SATA",kapasite:"120 GB - 960 GB",kontrolcu:"Phison S11",kontrolcu_oz:"Tek Çekirdek, 2 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"Micron/Toshiba",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"540",seq_yazma:"520",sinif:"B-",notlar:"-"},
+  {id:5111,kategori:"ssd",isim:"PNY XLR8 (CS3030)",arabirim:"M.2 NVMe",kapasite:"250 GB - 2 TB",kontrolcu:"Phison E12/E12S",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 32-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba-YMTC",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"3400",seq_yazma:"3100",sinif:"A-",notlar:"-"},
+  {id:5112,kategori:"ssd",isim:"PNY XLR8 (CS2130)",arabirim:"M.2 NVMe",kapasite:"500 GB- 4 TB",kontrolcu:"Phison E12S",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 4-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"QLC",nand:"3D",katman:"64.0",seq_okuma:"3500",seq_yazma:"3000",sinif:"B+",notlar:"Depolama amaçlı alınabilir."},
+  {id:5113,kategori:"ssd",isim:"PNY XLR8 (CS3040",arabirim:"M.2 NVMe",kapasite:"1 TB - 4 TB",kontrolcu:"Phison E16",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"5600",seq_yazma:"3900",sinif:"A+",notlar:"-"},
+  {id:5114,kategori:"ssd",isim:"Samsung 860 EVO",arabirim:"SATA, M.2 SATA",kapasite:"250 GB - 4 TB",kontrolcu:"Samsung MJX",kontrolcu_oz:"Üç Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Samsung",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"550",seq_yazma:"520",sinif:"A",notlar:"-"},
+  {id:5115,kategori:"ssd",isim:"Samsung 860 QVO",arabirim:"SATA",kapasite:"1 TB - 4 TB",kontrolcu:"Samsung MJX",kontrolcu_oz:"Üç Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Samsung",nand_tipi:"QLC",nand:"3D",katman:"64.0",seq_okuma:"550",seq_yazma:"520",sinif:"B-",notlar:"Depolama amacıyla kullanılmalı."},
+  {id:5116,kategori:"ssd",isim:"Samsung 860 PRO",arabirim:"SATA",kapasite:"256 GB - 4 TB",kontrolcu:"Samsung MJX",kontrolcu_oz:"Üç Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Samsung",nand_tipi:"MLC",nand:"3D",katman:"64.0",seq_okuma:"560",seq_yazma:"530",sinif:"S",notlar:"-"},
+  {id:5117,kategori:"ssd",isim:"Samsung 870 EVO",arabirim:"SATA (Şimdilik)",kapasite:"250 GB - 4 TB",kontrolcu:"Samsung MKX",kontrolcu_oz:"Üç Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Samsung",nand_tipi:"TLC",nand:"3D",katman:"128.0",seq_okuma:"550",seq_yazma:"520",sinif:"A+",notlar:"-"},
+  {id:5118,kategori:"ssd",isim:"Samsung 870 QVO",arabirim:"SATA",kapasite:"1 TB - 4 TB",kontrolcu:"Samsung MKX",kontrolcu_oz:"Üç Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Samsung",nand_tipi:"QLC",nand:"3D",katman:"96 (?)",seq_okuma:"560",seq_yazma:"530",sinif:"B+",notlar:"Depolama amacıyla kullanılmalı."},
+  {id:5119,kategori:"ssd",isim:"Samsung 960 EVO",arabirim:"M.2 NVMe",kapasite:"512 GB - 1 TB",kontrolcu:"Samsung Polaris",kontrolcu_oz:"5 Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Samsung",nand_tipi:"TLC",nand:"3D",katman:"48.0",seq_okuma:"3200",seq_yazma:"1900",sinif:"A-",notlar:"-"},
+  {id:5120,kategori:"ssd",isim:"Samsung 970 EVO",arabirim:"M.2 NVMe",kapasite:"250 GB - 2 TB",kontrolcu:"Samsung Phoenix",kontrolcu_oz:"5 Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Samsung",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"3500",seq_yazma:"2500",sinif:"A-",notlar:"-"},
+  {id:5121,kategori:"ssd",isim:"Samsung 970 EVO Plus",arabirim:"M.2 NVMe",kapasite:"250 GB - 1 TB",kontrolcu:"Samsung Elpis",kontrolcu_oz:"5 Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Samsung",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"3500",seq_yazma:"3300",sinif:"A+",notlar:"-"},
+  {id:5122,kategori:"ssd",isim:"Samsung 970 PRO",arabirim:"M.2 NVMe",kapasite:"512 GB - 1 TB",kontrolcu:"Samsung Phoenix",kontrolcu_oz:"5 Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Samsung",nand_tipi:"MLC",nand:"3D",katman:"64.0",seq_okuma:"3500",seq_yazma:"2700",sinif:"A+",notlar:"-"},
+  {id:5123,kategori:"ssd",isim:"Samsung 980.0",arabirim:"M.2 NVMe",kapasite:"250 GB- 1 TB",kontrolcu:"Samsung Pablo",kontrolcu_oz:"4 Kanal",dram:"Bulunmuyor",hmb:"Evet",bellek_uretici:"Samsung",nand_tipi:"TLC",nand:"3D",katman:"128/136",seq_okuma:"3500",seq_yazma:"3000",sinif:"A-",notlar:"-"},
+  {id:5124,kategori:"ssd",isim:"Samsung 980 PRO",arabirim:"M.2 NVMe",kapasite:"250 GB - 1 TB",kontrolcu:"Samsung Elpis",kontrolcu_oz:"5 Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Samsung",nand_tipi:"TLC",nand:"3D",katman:"128.0",seq_okuma:"7000",seq_yazma:"5000",sinif:"S",notlar:"-"},
+  {id:5125,kategori:"ssd",isim:"Samsung 990 PRO",arabirim:"M.2 NVMe",kapasite:"1 TB - 4 TB",kontrolcu:"Samsung Pascal",kontrolcu_oz:"5 Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Samsung",nand_tipi:"TLC",nand:"3D",katman:"176.0",seq_okuma:"7450",seq_yazma:"6900",sinif:"-",notlar:"-"},
+  {id:5126,kategori:"ssd",isim:"Samsung PM981",arabirim:"M.2 NVMe",kapasite:"256 GB - 2 TB",kontrolcu:"Samsung Phoenix",kontrolcu_oz:"5 Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Samsung",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"3200",seq_yazma:"2700",sinif:"B+",notlar:"OEM 970 EVO. Yazılım desteği bulunmuyor."},
+  {id:5127,kategori:"ssd",isim:"Samsung PM981A",arabirim:"M.2 NVMe",kapasite:"256 GB - 1 TB",kontrolcu:"Samsung Phoenix",kontrolcu_oz:"5 Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Samsung",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"3500",seq_yazma:"3000",sinif:"A-",notlar:"OEM 970 EVO Plus. Yazılım desteği bulunmuyor."},
+  {id:5128,kategori:"ssd",isim:"SanDisk Extreme Pro",arabirim:"M.2 NVMe",kapasite:"500 GB - 1 TB",kontrolcu:"WD Propretiary",kontrolcu_oz:"Üç Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"SanDisk",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"3400",seq_yazma:"2800",sinif:"A",notlar:"-"},
+  {id:5129,kategori:"ssd",isim:"SanDisk SSD Plus",arabirim:"SATA",kapasite:"120 GB - 2 TB",kontrolcu:"SMI SM2256S",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"SanDisk",nand_tipi:"TLC",nand:"2D",katman:"Ğ",seq_okuma:"545",seq_yazma:"550",sinif:"D-",notlar:"SanDisk SSD Plus neden alınmamalı?"},
+  {id:5130,kategori:"ssd",isim:"SanDisk Ultra 3D",arabirim:"SATA",kapasite:"250 GB - 2 TB",kontrolcu:"Marvell 88SS1074",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"SanDisk",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"550",seq_yazma:"525",sinif:"A",notlar:"WD Blue 3D ile aynı ürün."},
+  {id:5131,kategori:"ssd",isim:"SanDisk Ultra 3D",arabirim:"M.2 NVMe",kapasite:"250 GB - 1 TB",kontrolcu:"WD Propretiary",kontrolcu_oz:"Üç Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Evet",bellek_uretici:"SanDisk",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"2400",seq_yazma:"1950",sinif:"C+",notlar:"WD Blue SN550 ile aynı ürün."},
+  {id:5132,kategori:"ssd",isim:"Seagate Barracuda",arabirim:"SATA",kapasite:"250 GB - 2 TB",kontrolcu:"Phison S10",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 4-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"560",seq_yazma:"530",sinif:"B+",notlar:"-"},
+  {id:5133,kategori:"ssd",isim:"Seagate Barracuda 120",arabirim:"SATA",kapasite:"250 GB - 2TB",kontrolcu:"Phison S12",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Intel",nand_tipi:"TLC",nand:"3D",katman:"64/96",seq_okuma:"560",seq_yazma:"540",sinif:"A",notlar:"500 GB ve üstü modellerde 96L"},
+  {id:5134,kategori:"ssd",isim:"Seagate Firecuda 120",arabirim:"SATA",kapasite:"500 GB - 4 TB",kontrolcu:"Phison S12",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Kioxia",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"560",seq_yazma:"540",sinif:"A+",notlar:"860 PRO ile denk, kaliteli bir SSD."},
+  {id:5135,kategori:"ssd",isim:"Seagate Barracuda 510",arabirim:"M.2 NVMe",kapasite:"256 GB - 512 GB",kontrolcu:"Phison E12",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 32-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"3400",seq_yazma:"2200",sinif:"A-",notlar:"-"},
+  {id:5136,kategori:"ssd",isim:"Seagate Firecuda 510",arabirim:"M.2 NVMe",kapasite:"1 TB - 2 TB",kontrolcu:"Phison E12",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 32-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"3500",seq_yazma:"3200",sinif:"A+",notlar:"-"},
+  {id:5137,kategori:"ssd",isim:"Seagate Firecuda 520",arabirim:"M.2 NVMe",kapasite:"500 GB - 2 TB",kontrolcu:"Phison E16",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"5500",seq_yazma:"4400",sinif:"S",notlar:"-"},
+  {id:5138,kategori:"ssd",isim:"Seagate Firecuda 530",arabirim:"M.2 NVMe",kapasite:"500 GB - 4 TB",kontrolcu:"Phison E18",kontrolcu_oz:"5 Çekirdek (R5+CoX), 8 Kanal",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"176.0",seq_okuma:"7300",seq_yazma:"6900",sinif:"-",notlar:"-"},
+  {id:5139,kategori:"ssd",isim:"Seagate Ironwolf 110",arabirim:"SATA",kapasite:"240 GB- 3.84 TB",kontrolcu:"Seagate Architecture",kontrolcu_oz:"?",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Kioxia",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"560",seq_yazma:"535",sinif:"A",notlar:"240 GB modelinin yazma hızı 230 MB/s :("},
+  {id:5140,kategori:"ssd",isim:"Seagate Ironwolf Pro 125",arabirim:"SATA",kapasite:"240 GB- 3.84 TB",kontrolcu:"Phison S12DC",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"545",seq_yazma:"520",sinif:"S",notlar:"-"},
+  {id:5141,kategori:"ssd",isim:"Seagate Barracuda Q1",arabirim:"SATA",kapasite:"240 GB - 960 GB",kontrolcu:"Phison S11",kontrolcu_oz:"Tek Çekirdek, 2 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"QLC",nand:"3D",katman:"96.0",seq_okuma:"550",seq_yazma:"500",sinif:"C-",notlar:"QLC. Depolama amaçlı kullanılabilir."},
+  {id:5142,kategori:"ssd",isim:"Seagate Barracuda Q5",arabirim:"M.2 NVMe",kapasite:"500 GB- 2 TB",kontrolcu:"Phison E13T",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Evet (Olabilir)",bellek_uretici:"Micron",nand_tipi:"QLC",nand:"3D",katman:"96.0",seq_okuma:"2400",seq_yazma:"1800",sinif:"C",notlar:"QLC. Depolama amaçlı kullanılabilir."},
+  {id:5143,kategori:"ssd",isim:"Silicon Power A55",arabirim:"SATA",kapasite:"128 GB - 2 TB",kontrolcu:"SMI SM2258XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"560",seq_yazma:"530",sinif:"D+",notlar:"S55 ile aynı ürün."},
+  {id:5144,kategori:"ssd",isim:"Silicon Power Slim S55",arabirim:"SATA",kapasite:"120 GB - 960 GB",kontrolcu:"SMI SM2258XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"560",seq_yazma:"530",sinif:"D+",notlar:"Kötü Kontrolcü, JD'ni kardeşi"},
+  {id:5145,kategori:"ssd",isim:"Silicon Power UD70",arabirim:"M.2 NVMe",kapasite:"500 GB - 2 TB",kontrolcu:"Phison E12S",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 4-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Micron",nand_tipi:"QLC",nand:"3D",katman:"96.0",seq_okuma:"3400",seq_yazma:"3000",sinif:"B+",notlar:"-"},
+  {id:5146,kategori:"ssd",isim:"Silicon Power P34A60",arabirim:"M.2 NVMe",kapasite:"512 GB - 1 TB",kontrolcu:"SM2263XT",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunuyor",bellek_uretici:"Intel",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"2200",seq_yazma:"1600",sinif:"C+",notlar:"-"},
+  {id:5147,kategori:"ssd",isim:"Team CX1",arabirim:"SATA",kapasite:"240 GB - 960 GB",kontrolcu:"Phison S11",kontrolcu_oz:"Tek Çekirdek, 2 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"540",seq_yazma:"490",sinif:"C",notlar:"-"},
+  {id:5148,kategori:"ssd",isim:"Team CX2",arabirim:"SATA",kapasite:"256 GB - 2 TB",kontrolcu:"SMI SM2258XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"?",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"540",seq_yazma:"490",sinif:"D-",notlar:"Garbage"},
+  {id:5149,kategori:"ssd",isim:"Team GX1",arabirim:"SATA",kapasite:"120 GB - 960 GB",kontrolcu:"Phison S11",kontrolcu_oz:"Tek Çekirdek, 2 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"SanDisk",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"530",seq_yazma:"480",sinif:"D-",notlar:"Sıkıntılı model."},
+  {id:5150,kategori:"ssd",isim:"Team L3 EVO",arabirim:"SATA",kapasite:"120 GB -960 GB",kontrolcu:"Phison S11",kontrolcu_oz:"Tek Çekirdek, 2 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"530",seq_yazma:"500",sinif:"C",notlar:"-"},
+  {id:5151,kategori:"ssd",isim:"Team L5 Lite",arabirim:"SATA",kapasite:"60 GB - 1 TB",kontrolcu:"SMI SM2258",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"?",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"500",seq_yazma:"480",sinif:"B+",notlar:"-"},
+  {id:5152,kategori:"ssd",isim:"Toshiba TR-200",arabirim:"SATA",kapasite:"240 GB- 960 GB",kontrolcu:"Phison S11T",kontrolcu_oz:"Tek Çekirdek, 2 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"555",seq_yazma:"540",sinif:"D-",notlar:"-"},
+  {id:5153,kategori:"ssd",isim:"Toshiba RC-500",arabirim:"M.2 NVMe",kapasite:"250 GB- 500 GB",kontrolcu:"Phison E12C",kontrolcu_oz:"4 Kanal, 16-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"1700",seq_yazma:"1600",sinif:"C+",notlar:"-"},
+  {id:5154,kategori:"ssd",isim:"Toshiba RD500",arabirim:"M.2 NVMe",kapasite:"500 B - 1 TB",kontrolcu:"Phison E12S",kontrolcu_oz:"4 Çekirdek, 8 Kanal, 4-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"Toshiba",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"3400",seq_yazma:"3200",sinif:"B",notlar:"-"},
+  {id:5155,kategori:"ssd",isim:"Turbox KTA320",arabirim:"SATA",kapasite:"120 GB - 1 TB",kontrolcu:"SMI SM2259XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Bulunmuyor",bellek_uretici:"Intel",nand_tipi:"QLC",nand:"3D",katman:"64.0",seq_okuma:"550",seq_yazma:"520",sinif:"D-",notlar:"Kötü Kontrolcü, QLC NAND. Ayrıca TurboX!  Koşarak uzaklaşın gördüğünüz gibi."},
+  {id:5156,kategori:"ssd",isim:"WD Black SN750",arabirim:"M.2 NVMe",kapasite:"250 GB - 2 TB",kontrolcu:"WD Propretiary",kontrolcu_oz:"Üç Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"SanDisk",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"3500",seq_yazma:"3000",sinif:"A",notlar:"Soğutuculu ve soğutucusuz iki versiyonu var."},
+  {id:5157,kategori:"ssd",isim:"WD Black SN770",arabirim:"M.2 NVMe",kapasite:"250 GB - 2 TB",kontrolcu:"WD Propretiary",kontrolcu_oz:"İki Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Evet",bellek_uretici:"Kioxia",nand_tipi:"TLC",nand:"3D",katman:"112.0",seq_okuma:"5150",seq_yazma:"4850",sinif:"-",notlar:"-"},
+  {id:5158,kategori:"ssd",isim:"WD Black SN730",arabirim:"M.2 NVMe",kapasite:"250 GB - 2 TB",kontrolcu:"WD Propretiary",kontrolcu_oz:"Üç Çekirdek, 8 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"SanDisk",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"3500",seq_yazma:"3000",sinif:"A",notlar:"OEM model olmasına rağmen yazılım desteği var."},
+  {id:5159,kategori:"ssd",isim:"WD Blue 3D",arabirim:"SATA",kapasite:"250 GB - 2 TB",kontrolcu:"Marvell 88SS1074",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"SanDisk",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"550",seq_yazma:"525",sinif:"A",notlar:"SanDisk Ultra 3D (SATA) ile aynı ürün."},
+  {id:5160,kategori:"ssd",isim:"WD Blue SN550",arabirim:"M.2 NVMe",kapasite:"250 GB - 1 TB",kontrolcu:"WD Propretiary",kontrolcu_oz:"Üç Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Evet",bellek_uretici:"SanDisk",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"2400",seq_yazma:"1950",sinif:"C+",notlar:"SanDisk Ultra 3D (M.2 NVME) ile aynı ürün."},
+  {id:5161,kategori:"ssd",isim:"WD Blue SN570",arabirim:"-",kapasite:"250 GB - 1 TB",kontrolcu:"WD in-house (?)",kontrolcu_oz:"(?)",dram:"Bulunmuyor",hmb:"Evet",bellek_uretici:"BiCS5",nand_tipi:"TLC",nand:"3D",katman:"112L",seq_okuma:"3500",seq_yazma:"3000",sinif:"B+",notlar:"-"},
+  {id:5162,kategori:"ssd",isim:"WD Blue SN530",arabirim:"M.2 NVMe",kapasite:"250 GB - 1 TB",kontrolcu:"WD Propretiary",kontrolcu_oz:"Üç Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"Evet",bellek_uretici:"SanDisk",nand_tipi:"TLC",nand:"3D",katman:"95.0",seq_okuma:"2400",seq_yazma:"1950",sinif:"C+",notlar:"-"},
+  {id:5163,kategori:"ssd",isim:"WD Green",arabirim:"SATA, M.2 SATA",kapasite:"120 GB - 1 TB",kontrolcu:"SMI SM2558XT",kontrolcu_oz:"Tek Çekirdek, 4 Kanal, 8-CE/ch",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"SanDisk",nand_tipi:"TLC",nand:"2D",katman:"Ğ",seq_okuma:"545",seq_yazma:"-",sinif:"D-",notlar:"Kötü kontrolcü ve sıkıntılı model."},
+  {id:5164,kategori:"ssd",isim:"WD Green (Gen 2)",arabirim:"SATA, M.2 SATA",kapasite:"120 GB - 1 TB",kontrolcu:"SanDisk 20-82-00469-2",kontrolcu_oz:"?",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"SanDisk",nand_tipi:"TLC",nand:"3D",katman:"64.0",seq_okuma:"545",seq_yazma:"465",sinif:"D-",notlar:"Kötü kontrolcü ve sıkıntılı model."},
+  {id:5165,kategori:"ssd",isim:"WD Green SN350",arabirim:"M.2 NVMe",kapasite:"240 GB - 960 GB",kontrolcu:"WD in-house (?)",kontrolcu_oz:"?",dram:"Bulunmuyor",hmb:"?",bellek_uretici:"SanDisk",nand_tipi:"TLC&QLC",nand:"3D",katman:"64.0",seq_okuma:"2400",seq_yazma:"1950",sinif:"-",notlar:"-"},
+  {id:5166,kategori:"ssd",isim:"WD Red",arabirim:"SATA, M.2 SATA",kapasite:"500 GB - 4 TB",kontrolcu:"Marvell 88SS1074",kontrolcu_oz:"Çift Çekirdek, 4 Kanal, 8-CE/ch",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"SanDisk",nand_tipi:"TLC",nand:"3D",katman:"96.0",seq_okuma:"560",seq_yazma:"530",sinif:"A+",notlar:"-"},
+  {id:5167,kategori:"ssd",isim:"WD SN850",arabirim:"M.2 NVMe",kapasite:"500 GB - 2 TB",kontrolcu:"WD Propretiary",kontrolcu_oz:"?",dram:"Evet",hmb:"Bulunmuyor",bellek_uretici:"BiCS",nand_tipi:"TLC",nand:"3D",katman:"?",seq_okuma:"7000",seq_yazma:"5300",sinif:"S",notlar:"-"}
 ];
 
 /* ══════════════════════════════
@@ -1734,12 +1929,55 @@ function previewSatirlar(u){
 const tumSayfalar=["homePage","productsPage","rehberlerPage","haberlerPage"];
 const tumNavler=["navHome","navProducts","navRehberler","navHaberler"];
 
+/* ── SPA GEÇMİŞ YÖNETİMİ ── */
+let _navLock = false; // popstate sırasında tekrar push etmesin
+
+function _guncelleBrowserBtns(){
+  // Tarayıcı history API'sinde kaçıncı konumda olduğumuzu bilmenin yolu yok;
+  // bunun yerine kendi stack'imizi tutuyoruz.
+}
+
+// Kendi geçmiş yığınımız
+const _spaHistory = [];  // [{sayfaId, navId, katId}]
+let _spaIdx = -1;        // şu anki konum
+
+function _pushSpa(sayfaId, navId, katId){
+  if(_navLock) return;
+  // İleri geçmişi temizle (yeni dal)
+  _spaHistory.splice(_spaIdx + 1);
+  _spaHistory.push({sayfaId, navId, katId: katId||null});
+  _spaIdx = _spaHistory.length - 1;
+  _btnDurumGuncelle();
+}
+
+function _btnDurumGuncelle(){
+  const b = document.getElementById("btnBack");
+  const f = document.getElementById("btnForward");
+  if(b) b.disabled = _spaIdx <= 0;
+  if(f) f.disabled = _spaIdx >= _spaHistory.length - 1;
+}
+
+function _gidSpa(idx){
+  if(idx < 0 || idx >= _spaHistory.length) return;
+  _navLock = true;
+  _spaIdx = idx;
+  const {sayfaId, navId, katId} = _spaHistory[idx];
+  _sayfaGosterInternal(sayfaId, navId);
+  if(sayfaId === "homePage")    renderHome();
+  if(sayfaId === "productsPage"){ if(katId) aktifKat=katId; guncelleAkakce(); renderSidebar(); renderGrid(); }
+  _btnDurumGuncelle();
+  _navLock = false;
+}
+
 function sayfaGoster(sayfaId, navId){
+  _sayfaGosterInternal(sayfaId, navId);
+}
+
+function _sayfaGosterInternal(sayfaId, navId){
   tumSayfalar.forEach(id=>{document.getElementById(id).style.display="none";});
   tumNavler.forEach(id=>{document.getElementById(id).classList.remove("active");});
   document.getElementById(sayfaId).style.display="flex";
   document.getElementById(navId).classList.add("active");
-  // Karşılaştırma barını sadece ürünler sayfasında göster
   const footer=document.getElementById("mainFooter");
   if(footer) footer.style.display=sayfaId==="productsPage"?"flex":"none";
 }
@@ -1747,6 +1985,7 @@ function sayfaGoster(sayfaId, navId){
 function goHome(){
   sayfaGoster("homePage","navHome");
   renderHome();
+  _pushSpa("homePage","navHome",null);
 }
 
 function goProducts(katId){
@@ -1755,14 +1994,17 @@ function goProducts(katId){
   guncelleAkakce();
   renderSidebar();
   renderGrid();
+  _pushSpa("productsPage","navProducts",katId||aktifKat||null);
 }
 
 function goRehberler(){
   sayfaGoster("rehberlerPage","navRehberler");
+  _pushSpa("rehberlerPage","navRehberler",null);
 }
 
 function goHaberler(){
   sayfaGoster("haberlerPage","navHaberler");
+  _pushSpa("haberlerPage","navHaberler",null);
 }
 
 /* ══════════════════════════════
@@ -2213,6 +2455,124 @@ function karsilastir(){
       }
 
     } // end cpu özel
+
+    /* ── SSD ÖZEL SATIRLAR ── */
+    if(kat==="ssd" && !tek){
+
+      // Sınıf skor tablosu: S++ > S+ > S > A+ > A > A- > B+ > B > B- > C+ > C > C- > D+ > D > D- (boş en kötü)
+      const sinifSkor={"S++":16,"S+":15,"S":14,"A+":13,"A":12,"A-":11,"B+":10,"B":9,"B-":8,"C+":7,"C":6,"C-":5,"D+":4,"D":3,"D-":2,"-":1,"":0};
+      function parseSinif(v){ return sinifSkor[String(v||"").trim()]??0; }
+
+      // Sınıf — harf bazlı skor
+      if(a==="sinif"){
+        tablo+=`<tr><td>${etiketler[a]||a}</td>`;
+        const skorlar=hamDegerler.map(parseSinif);
+        const maxS=Math.max(...skorlar), minS=Math.min(...skorlar);
+        hamDegerler.forEach((v,i)=>{
+          let cls="orta";
+          if(maxS!==minS){ if(skorlar[i]===maxS) cls="en-iyi"; else if(skorlar[i]===minS) cls="en-kotu"; } else cls="esit";
+          const s=String(v||"-").trim();
+          const color=s.startsWith("S")?"#00ffcc":s.startsWith("A")?"#4db6ac":s.startsWith("B")?"#ffd54f":s.startsWith("C")?"#ff9800":"#ef5350";
+          tablo+=`<td class="${cls}"><span style="font-weight:700;font-size:15px;color:${color}">${s}</span></td>`;
+        });
+        tablo+=`</tr>`; return;
+      }
+
+      // DRAM & HMB — Evet/Bulunmuyor/?  →  Evet > ? > Bulunmuyor
+      if(a==="dram"||a==="hmb"){
+        tablo+=`<tr><td>${etiketler[a]||a}</td>`;
+        const dramSkor=(v)=>{ const s=String(v||"").trim(); if(s==="Evet") return 2; if(s==="?") return 1; return 0; };
+        const skorlar=hamDegerler.map(dramSkor);
+        const maxS=Math.max(...skorlar), minS=Math.min(...skorlar);
+        hamDegerler.forEach((v,i)=>{
+          let cls="orta";
+          if(maxS!==minS){ if(skorlar[i]===maxS) cls="en-iyi"; else if(skorlar[i]===minS) cls="en-kotu"; } else cls="esit";
+          const s=String(v||"-").trim();
+          const color=s==="Evet"?"#00ffcc":s==="Bulunmuyor"?"#ef5350":"#aaa";
+          tablo+=`<td class="${cls}"><span style="font-weight:600;color:${color}">${s}</span></td>`;
+        });
+        tablo+=`</tr>`; return;
+      }
+
+      // Seq. Okuma & Yazma — sayısal, yüksek iyi, MB/s birim badge
+      if(a==="seq_okuma"||a==="seq_yazma"){
+        tablo+=`<tr><td>${etiketler[a]||a}</td>`;
+        const nums=hamDegerler.map(v=>{ const n=parseFloat(v); return isNaN(n)?null:n; });
+        const valid=nums.filter(v=>v!==null);
+        const mx=valid.length?Math.max(...valid):null, mn=valid.length?Math.min(...valid):null;
+        hamDegerler.forEach((v,i)=>{
+          let cls="orta";
+          if(nums[i]!==null && mx!==null && mx!==mn){ if(nums[i]===mx) cls="en-iyi"; else if(nums[i]===mn) cls="en-kotu"; } else if(mx===mn&&nums[i]!==null) cls="esit";
+          const val=nums[i]!==null?`<span style="font-weight:700">${nums[i]}</span> <span style="font-size:11px;opacity:.6">MB/s</span>`:"-";
+          tablo+=`<td class="${cls}">${val}</td>`;
+        });
+        tablo+=`</tr>`; return;
+      }
+
+      // Katman Sayısı — yüksek iyi
+      if(a==="katman"){
+        tablo+=`<tr><td>${etiketler[a]||a}</td>`;
+        const nums=hamDegerler.map(v=>{ const n=parseFloat(v); return isNaN(n)?null:n; });
+        const valid=nums.filter(v=>v!==null);
+        const mx=valid.length?Math.max(...valid):null, mn=valid.length?Math.min(...valid):null;
+        hamDegerler.forEach((v,i)=>{
+          let cls="orta";
+          if(nums[i]!==null && mx!==null && mx!==mn){ if(nums[i]===mx) cls="en-iyi"; else if(nums[i]===mn) cls="en-kotu"; } else if(mx===mn&&nums[i]!==null) cls="esit";
+          tablo+=`<td class="${cls}">${v&&v!=="-"?`<span style="font-weight:600">${v}</span> <span style="font-size:11px;opacity:.6">Layer</span>`:"-"}</td>`;
+        });
+        tablo+=`</tr>`; return;
+      }
+
+      // NAND Tipi — TLC > QLC > MLC (sıralı olarak: MLC>TLC>QLC güvenilirlik açısından ama hız açısından TLC>QLC)
+      // Burada güvenilirlik/hız dengesi için TLC en iyi, MLC ikinci, QLC en kötü
+      if(a==="nand_tipi"){
+        tablo+=`<tr><td>${etiketler[a]||a}</td>`;
+        const nandSkor={"MLC":3,"TLC":2,"QLC":1,"?":0,"-":0};
+        const skorlar=hamDegerler.map(v=>nandSkor[String(v||"").trim()]??0);
+        const maxS=Math.max(...skorlar), minS=Math.min(...skorlar);
+        hamDegerler.forEach((v,i)=>{
+          let cls="orta";
+          if(maxS!==minS){ if(skorlar[i]===maxS) cls="en-iyi"; else if(skorlar[i]===minS) cls="en-kotu"; } else cls="esit";
+          const s=String(v||"-").trim();
+          const color=s==="MLC"?"#00ffcc":s==="TLC"?"#64b5f6":s==="QLC"?"#ff9800":"#aaa";
+          tablo+=`<td class="${cls}"><span style="font-weight:700;color:${color}">${s}</span></td>`;
+        });
+        tablo+=`</tr>`; return;
+      }
+
+      // Bellek Üreticisi — renksiz badge
+      if(a==="bellek_uretici"){
+        tablo+=`<tr><td>${etiketler[a]||a}</td>`;
+        const hepsiAyni=hamDegerler.every(v=>v===hamDegerler[0]);
+        hamDegerler.forEach(v=>{
+          tablo+=`<td class="${hepsiAyni?"esit":"orta"}"><span style="font-weight:600;color:#ffd54f">${v||"-"}</span></td>`;
+        });
+        tablo+=`</tr>`; return;
+      }
+
+      // Kontrolcü Özellikleri & Arabirim — sadece eşitlik kontrolü, metin badge
+      if(a==="kontrolcu_oz"||a==="arabirim"||a==="kontrolcu"){
+        tablo+=`<tr><td>${etiketler[a]||a}</td>`;
+        const hepsiAyni=hamDegerler.every(v=>String(v||"").trim()===String(hamDegerler[0]||"").trim());
+        hamDegerler.forEach(v=>{
+          tablo+=`<td class="${hepsiAyni?"esit":"orta"}">${v||"-"}</td>`;
+        });
+        tablo+=`</tr>`; return;
+      }
+
+      // Notlar — sadece göster, renklendirme yok ama dikkat çekici stil
+      if(a==="notlar"){
+        tablo+=`<tr><td>${etiketler[a]||a}</td>`;
+        hamDegerler.forEach(v=>{
+          const s=String(v||"-").trim();
+          const isEmpty=s==="-"||s==="";
+          tablo+=`<td class="orta"><span style="font-size:12px;color:${isEmpty?"#555":"#ffb74d"};font-style:${isEmpty?"normal":"italic"}">${s||"-"}</span></td>`;
+        });
+        tablo+=`</tr>`; return;
+      }
+
+    } // end ssd özel
+
     if(a==="busInterface" && !tek){
       tablo+=`<tr><td>${etiketler[a]||a}</td>`;
       const skorlar=hamDegerler.map(v=>busInterfaceSira[v]??0);
